@@ -1,13 +1,18 @@
-// ১. ফায়ারবেস কনফিগারেশন (আপনার Firebase প্রজেক্টের তথ্য এখানে বসাবেন)
+
+// ১. ফায়ারবেস কনফিগারেশন (আপনার আসল প্রজেক্টের ক্রেডেনশিয়ালস)
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyA0bsgnNC34npeOYd_2vIYHsussNaj8_Ls",
+    authDomain: "policeacademyapp.firebaseapp.com",
+    databaseURL: "https://policeacademyapp-default-rtdb.firebaseio.com",
+    projectId: "policeacademyapp",
+    storageBucket: "policeacademyapp.firebasestorage.app",
+    messagingSenderId: "1095805653552",
+    appId: "1:1095805653552:web:770d4668b8704a66253f5"
 };
+
+// ফায়ারবেস ইনিশিয়ালাইজেশন
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
 // ফায়ারবেস ইনিশিয়ালাইজেশন
 firebase.initializeApp(firebaseConfig);
