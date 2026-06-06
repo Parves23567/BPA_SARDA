@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>বাংলাদেশ পুলিশ একাডেমি | সারদা, রাজশাহী</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{
+  navy:{'50':'#e8edf5','100':'#c5d0e3','DEFAULT':'#0a1628','700':'#0d1f3c','800':'#091525','900':'#060e1a'},
+  gold:{'DEFAULT':'#c9a84c','light':'#e2c97e','dark':'#a07c2e'},
+  silver:{'DEFAULT':'#9eafc2','light':'#d0dae6','dark':'#607080'}
+},fontFamily:{display:['"Playfair Display"','serif'],body:['"Hind Siliguri"','sans-serif']}}}};
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0a1628;--navy7:#0d1f3c;--navy8:#091525;--navy9:#060e1a;--gold:#c9a84c;--goldl:#e2c97e;--goldd:#a07c2e;--silver:#9eafc2;--silverl:#d0dae6;--silverd:#607080}
+html{scroll-behavior:smooth}
+body{background:var(--navy9);color:var(--silverl);font-family:'Hind Siliguri',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--navy9)}::-webkit-scrollbar-thumb{background:var(--goldd);border-radius:3px}
+::selection{background:var(--gold);color:var(--navy9)}
+
+/* ══════════════════════════════
+   HEADER BANNER (rectangular)
+══════════════════════════════ */
+#site-header{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:linear-gradient(135deg,#060e1a 0%,#0d1f3c 50%,#060e1a 100%);
+  border-bottom:3px solid var(--gold);
+  box-shadow:0 4px 32px rgba(0,0,0,.7);
+  transition:all .4s;
+}
+#site-header.scrolled{
+  background:rgba(6,14,26,.97);
+  backdrop-filter:blur(16px);
+  box-shadow:0 6px 40px rgba(0,0,0,.8);
+}
+
+/* Top decorative strip */
+.header-top-strip{
+  height:4px;
+  background:linear-gradient(90deg,var(--goldd),var(--goldl),var(--gold),var(--goldl),var(--goldd));
+}
+
+/* Main header row */
+.header-main{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:0;
+  padding:0 20px;
+  min-height:90px;
+  position:relative;
+}
+
+/* Left logo box */
+.logo-box-left{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 18px 10px 4px;
+  border-right:1px solid rgba(201,168,76,.25);
+}
+.logo-box-left img{
+  width:72px;height:72px;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));
+}
+
+/* Center title block */
+.header-center{
+  text-align:center;
+  padding:12px 24px;
+  position:relative;
+}
+.header-center::before,
+.header-center::after{
+  content:'';
+  position:absolute;
+  top:50%;transform:translateY(-50%);
+  width:24px;height:24px;
+  border:2px solid rgba(201,168,76,.3);
+}
+.header-center::before{left:8px;border-right:none;border-bottom:none;}
+.header-center::after{right:8px;border-left:none;border-top:none;}
+
+.header-bn-name{
+  font-family:'Hind Siliguri',sans-serif;
+  font-weight:700;
+  font-size:clamp(1rem,2.5vw,1.45rem);
+  color:#fff;
+  line-height:1.25;
+  letter-spacing:.03em;
+  text-shadow:0 1px 8px rgba(0,0,0,.6);
+}
+.header-en-name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:clamp(.65rem,1.4vw,.85rem);
+  color:var(--goldl);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-top:2px;
+}
+.header-location{
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:clamp(.6rem,1.2vw,.75rem);
+  color:var(--silver);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+.header-divider{
+  width:120px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:6px auto;
+}
+.header-motto{
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:.68rem;
+  color:var(--gold);
+  letter-spacing:.05em;
+  font-style:italic;
+  margin-top:2px;
+}
+
+/* Right logo box */
+.logo-box-right{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 4px 10px 18px;
+  border-left:1px solid rgba(201,168,76,.25);
+}
+.logo-box-right img{
+  width:80px;height:80px;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));
+}
+
+/* Bottom nav strip */
+.header-nav-strip{
+  background:rgba(0,0,0,.35);
+  border-top:1px solid rgba(201,168,76,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  padding:0 16px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.header-nav-strip::-webkit-scrollbar{display:none}
+
+.nav-a{
+  color:var(--silver);
+  text-decoration:none;
+  font-size:.75rem;
+  letter-spacing:.07em;
+  padding:8px 12px;
+  white-space:nowrap;
+  transition:all .22s;
+  position:relative;
+  font-weight:500;
+  border-bottom:2px solid transparent;
+}
+.nav-a::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;left:50%;right:50%;
+  height:2px;
+  background:var(--gold);
+  transition:all .25s;
+}
+.nav-a:hover{color:var(--gold);}
+.nav-a:hover::after{left:0;right:0;}
+
+/* Language btn + hamburger */
+.nav-controls{
+  display:flex;align-items:center;gap:8px;
+  margin-left:auto;padding-left:12px;
+  border-left:1px solid rgba(201,168,76,.15);
+  flex-shrink:0;
+}
+.lang-btn{
+  border:1px solid var(--gold);color:var(--gold);
+  background:transparent;padding:4px 12px;border-radius:4px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.72rem;font-weight:600;
+  cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:5px;
+  white-space:nowrap;
+}
+.lang-btn:hover{background:var(--gold);color:var(--navy9);}
+.ham{background:none;border:none;color:var(--gold);cursor:pointer;padding:6px;display:none;}
+
+/* Mobile menu */
+#mob-menu{
+  display:none;flex-direction:column;gap:3px;
+  padding:10px 14px;
+  background:rgba(6,14,26,.98);
+  border-top:1px solid rgba(201,168,76,.15);
+}
+#mob-menu.open{display:flex}
+#mob-menu a{
+  color:var(--silverl);text-decoration:none;
+  padding:9px 12px;border-radius:6px;font-size:.875rem;transition:all .2s;
+}
+#mob-menu a:hover{background:rgba(201,168,76,.1);color:var(--gold);}
+
+/* Mobile header adjustments */
+@media(max-width:768px){
+  .header-main{grid-template-columns:56px 1fr 56px;gap:0;min-height:76px;padding:0 10px;}
+  .logo-box-left img{width:50px;height:50px;}
+  .logo-box-right img{width:55px;height:55px;}
+  .logo-box-left{padding:8px 10px 8px 2px;}
+  .logo-box-right{padding:8px 2px 8px 10px;}
+  .header-center{padding:8px 12px;}
+  .header-bn-name{font-size:.9rem;}
+  .header-en-name{font-size:.58rem;}
+  .header-location{font-size:.55rem;}
+  .header-motto{display:none;}
+  .header-divider{width:70px;margin:4px auto;}
+  .header-nav-strip{justify-content:flex-start;}
+  .ham{display:block!important;}
+  .desktop-nav-links{display:none!important;}
+}
+@media(max-width:480px){
+  .logo-box-left img{width:40px;height:40px;}
+  .logo-box-right img{width:44px;height:44px;}
+  .header-bn-name{font-size:.78rem;}
+}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 25% 50%,rgba(13,31,60,.9),transparent 60%),
+             radial-gradient(ellipse at 75% 20%,rgba(201,168,76,.07),transparent 55%),
+             linear-gradient(135deg,#060e1a,#0d1f3c 50%,#060e1a)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.035) 1px,transparent 1px);background-size:55px 55px}
+.hero-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.07),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.crest{animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 28px rgba(201,168,76,.35))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.gold-line{width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto}
+.btn-p{display:inline-flex;align-items:center;justify-content:center;padding:11px 28px;background:var(--gold);color:var(--navy9);font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:5px;border:2px solid var(--gold);transition:all .25s}
+.btn-p:hover{background:var(--goldl);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
+.btn-o{display:inline-flex;align-items:center;justify-content:center;padding:11px 28px;background:transparent;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:5px;border:2px solid var(--gold);transition:all .25s}
+.btn-o:hover{background:rgba(201,168,76,.1);transform:translateY(-2px)}
+
+/* ── STATS BAR ── */
+.stats-bar{background:linear-gradient(90deg,var(--navy8),var(--navy7),var(--navy8));border-top:1px solid rgba(201,168,76,.2);border-bottom:1px solid rgba(201,168,76,.2);padding:22px 0}
+.stat{text-align:center;position:relative}
+.stat+.stat::before{content:'';position:absolute;left:0;top:15%;height:70%;width:1px;background:rgba(201,168,76,.15)}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;color:var(--gold);line-height:1}
+.stat-lbl{font-size:.72rem;color:var(--silver);margin-top:4px;letter-spacing:.05em}
+
+/* ── SECTIONS ── */
+.sec{padding:80px 0}
+.sec-dark{background:var(--navy8)}
+.eyebrow{display:block;font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
+.sec-h{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;color:#fff;line-height:1.15}
+
+/* ── CARDS generic ── */
+.card{background:rgba(13,31,60,.55);border:1px solid rgba(201,168,76,.12);border-radius:12px;padding:24px;transition:all .3s;position:relative;overflow:hidden}
+.card:hover{border-color:rgba(201,168,76,.32);transform:translateY(-4px);box-shadow:0 18px 45px rgba(0,0,0,.35)}
+.card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s}
+.card:hover::after{transform:scaleX(1)}
+.card-icon{width:50px;height:50px;border-radius:10px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;color:var(--gold);margin-bottom:14px}
+.badge{display:inline-flex;align-items:center;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:600;letter-spacing:.04em}
+.badge-s{background:rgba(201,168,76,.12);color:var(--goldl);border:1px solid rgba(201,168,76,.2)}
+.badge-m{background:rgba(158,175,194,.08);color:var(--silverl);border:1px solid rgba(158,175,194,.15)}
+.badge-j{background:rgba(96,112,128,.1);color:var(--silver);border:1px solid rgba(96,112,128,.15)}
+.tag{font-size:.62rem;padding:2px 9px;border-radius:20px;background:rgba(201,168,76,.1);color:var(--goldl);border:1px solid rgba(201,168,76,.18);text-transform:uppercase;letter-spacing:.05em}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:22px}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--gold),transparent)}
+.tl-item{position:relative;padding:0 0 26px 26px}
+.tl-item::before{content:'';position:absolute;left:-5px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.5)}
+.tl-year{font-family:'Playfair Display',serif;font-weight:700;color:var(--gold);font-size:.95rem;margin-bottom:3px}
+
+/* ── HISTORY CARD ── */
+.h-card{background:rgba(13,31,60,.6);border:1px solid rgba(201,168,76,.15);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.h-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--goldd),var(--goldl),var(--goldd))}
+
+/* ── PRINCIPAL ── */
+.principal-wrap{background:rgba(13,31,60,.7);border:1px solid rgba(201,168,76,.2);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.pp-col{background:linear-gradient(135deg,var(--navy7),var(--navy9));border-right:1px solid rgba(201,168,76,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 20px;min-height:260px}
+.pp-frame{width:150px;height:170px;border-radius:10px;background:rgba(255,255,255,.04);border:2px dashed rgba(201,168,76,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--silver);gap:8px}
+.pp-badge{margin-top:14px;background:var(--gold);padding:4px 18px;border-radius:30px;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--navy9)}
+.quote{border-left:3px solid var(--gold);padding-left:14px;font-style:italic;color:var(--silverl);font-size:.875rem;line-height:1.7}
+
+/* ── TRAINEE CARDS ── */
+.t-card{background:rgba(9,21,37,.6);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:26px 18px;text-align:center;transition:all .3s}
+.t-card:hover{border-color:rgba(201,168,76,.35);transform:translateY(-4px);box-shadow:0 14px 38px rgba(0,0,0,.3)}
+.rank-circle{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--navy7),var(--navy9));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;color:var(--gold);margin:0 auto;box-shadow:0 0 18px rgba(201,168,76,.2)}
+
+/* ── FACILITY CARDS ── */
+.fac-card{background:rgba(13,31,60,.5);border:1px solid rgba(201,168,76,.1);border-radius:12px;overflow:hidden;transition:all .3s}
+.fac-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px);box-shadow:0 14px 38px rgba(0,0,0,.3)}
+.fac-top{height:110px;background:linear-gradient(135deg,var(--navy7),var(--navy9));display:flex;align-items:center;justify-content:center;position:relative}
+.fac-top::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.06),transparent 70%)}
+.fac-body{padding:16px}
+
+/* ── DIRECTORY ── */
+.dir-input{width:100%;padding:10px 10px 10px 40px;background:rgba(13,31,60,.85);border:1px solid rgba(201,168,76,.2);border-radius:8px;color:var(--silverl);font-family:'Hind Siliguri',sans-serif;font-size:.875rem;outline:none;transition:all .25s}
+.dir-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.08)}
+.dir-input::placeholder{color:var(--silverd)}
+.dir-sel{padding:10px 14px;background:rgba(13,31,60,.85);border:1px solid rgba(201,168,76,.2);border-radius:8px;color:var(--silverl);font-family:'Hind Siliguri',sans-serif;font-size:.875rem;outline:none;cursor:pointer;transition:all .25s;min-width:170px}
+.dir-sel:focus{border-color:var(--gold)}
+.dir-sel option{background:var(--navy7)}
+.tbl-wrap{border:1px solid rgba(201,168,76,.15);border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead th{background:rgba(201,168,76,.08);color:var(--goldl);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;padding:13px 15px;text-align:left;border-bottom:1px solid rgba(201,168,76,.15);font-weight:600}
+tbody tr{transition:background .2s}
+tbody tr:hover td{background:rgba(201,168,76,.04)}
+tbody tr:nth-child(even) td{background:rgba(13,31,60,.3)}
+tbody tr:nth-child(even):hover td{background:rgba(201,168,76,.05)}
+td{padding:11px 15px;font-size:.84rem;color:var(--silverl);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+.ph-link{color:var(--goldl);text-decoration:none;font-size:.78rem}
+.ph-link:hover{text-decoration:underline}
+
+/* ── CONTACT ── */
+.c-card{background:rgba(13,31,60,.5);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:26px;text-align:center;transition:all .3s}
+.c-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px)}
+.c-icon{width:54px;height:54px;border-radius:50%;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;color:var(--gold);margin:0 auto 12px}
+
+/* ── FOOTER ── */
+footer{background:var(--navy9);border-top:1px solid rgba(201,168,76,.15);padding:48px 16px 24px}
+.f-link{display:block;color:var(--silver);text-decoration:none;padding:3px 0;font-size:.78rem;transition:color .2s}
+.f-link:hover{color:var(--gold)}
+
+/* ── LOADER ── */
+.spin{width:34px;height:34px;border:3px solid rgba(201,168,76,.15);border-top-color:var(--gold);border-radius:50%;animation:rotate .8s linear infinite}
+@keyframes rotate{to{transform:rotate(360deg)}}
+
+/* ── BACK TO TOP ── */
+#btt{position:fixed;bottom:26px;right:22px;width:42px;height:42px;background:var(--gold);color:var(--navy9);border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 18px rgba(201,168,76,.4);transition:all .25s;z-index:900;opacity:0;pointer-events:none}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:var(--goldl);transform:translateY(-3px)}
+
+/* ── DB STATUS ── */
+.db-dot{width:8px;height:8px;border-radius:50%;background:#facc15;animation:pulse 1.5s infinite}
+.db-dot.green{background:#4ade80;animation:none}
+.db-dot.red{background:#f87171;animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── INTL NOTE ── */
+.intl-note{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:12px;padding:22px}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.on{opacity:1;transform:none}
+
+/* Mobile nav (controlled by JS + ham button) */
+@media(max-width:767px){.pp-col{border-right:none;border-bottom:1px solid rgba(201,168,76,.15)}}
+@media(max-width:480px){.dir-sel{min-width:unset;width:100%}.stat-num{font-size:1.6rem}}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     SITE HEADER — rectangular, two logos
+════════════════════════════════════════ -->
+<header id="site-header">
+
+  <!-- Top gold accent strip -->
+  <div class="header-top-strip"></div>
+
+  <!-- Main logo + title row -->
+  <div class="header-main">
+
+    <!-- LEFT LOGO: Bangladesh Police -->
+    <div class="logo-box-left">
+      <a href="#hero" style="display:block;line-height:0">
+        <img src="police-logo.png"
+             alt="Bangladesh Police Logo"
+             title="বাংলাদেশ পুলিশ"
+             onerror="this.style.display='none'"/>
+      </a>
+    </div>
+
+    <!-- CENTER: Academy Name -->
+    <div class="header-center">
+      <div class="header-bn-name" data-i18n="hdrBn">বাংলাদেশ পুলিশ একাডেমি</div>
+      <div class="header-divider"></div>
+      <div class="header-en-name" data-i18n="hdrEn">Bangladesh Police Academy</div>
+      <div class="header-location" data-i18n="hdrLoc">সারদা, রাজশাহী &nbsp;|&nbsp; Sarda, Rajshahi</div>
+      <div class="header-motto" data-i18n="hdrMotto">উত্তম প্রশিক্ষণ, সর্বোত্তম সেবা</div>
+    </div>
+
+    <!-- RIGHT LOGO: BPA Emblem -->
+    <div class="logo-box-right">
+      <a href="#hero" style="display:block;line-height:0">
+        <img src="bpa-emblem.png"
+             alt="BPA Emblem"
+             title="বাংলাদেশ পুলিশ একাডেমি এম্বলেম"
+             onerror="this.style.display='none'"/>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom navigation strip -->
+  <div class="header-nav-strip">
+    <!-- Desktop nav links -->
+    <div class="desktop-nav-links" style="display:flex;align-items:center;gap:0;flex:1;justify-content:center">
+      <a href="#history"    class="nav-a" data-i18n="navHistory">ইতিহাস</a>
+      <a href="#principal"  class="nav-a" data-i18n="navPrincipal">প্রিন্সিপাল</a>
+      <a href="#training"   class="nav-a" data-i18n="navTraining">ট্রেনিং</a>
+      <a href="#trainees"   class="nav-a" data-i18n="navTrainees">প্রশিক্ষণার্থী</a>
+      <a href="#facilities" class="nav-a" data-i18n="navFacilities">সুবিধা</a>
+      <a href="#directory"  class="nav-a" data-i18n="navDirectory">পরিচালিকা</a>
+      <a href="#contact"    class="nav-a" data-i18n="navContact">যোগাযোগ</a>
+    </div>
+
+    <!-- Controls: language + hamburger -->
+    <div class="nav-controls">
+      <button class="lang-btn" onclick="toggleLang()">
+        <svg style="width:13px;height:13px;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+        </svg>
+        <span id="langLbl">English</span>
+      </button>
+      <button class="ham" onclick="toggleMob()" aria-label="মেনু">
+        <svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile dropdown menu -->
+  <div id="mob-menu">
+    <a href="#history"    onclick="closeMob()" data-i18n="navHistory">ইতিহাস</a>
+    <a href="#principal"  onclick="closeMob()" data-i18n="navPrincipal">প্রিন্সিপাল</a>
+    <a href="#training"   onclick="closeMob()" data-i18n="navTraining">ট্রেনিং</a>
+    <a href="#trainees"   onclick="closeMob()" data-i18n="navTrainees">প্রশিক্ষণার্থী</a>
+    <a href="#facilities" onclick="closeMob()" data-i18n="navFacilities">সুবিধা</a>
+    <a href="#directory"  onclick="closeMob()" data-i18n="navDirectory">পরিচালিকা</a>
+    <a href="#contact"    onclick="closeMob()" data-i18n="navContact">যোগাযোগ</a>
+  </div>
+
+</header>
+
+<!-- ════════════ HERO ════════════ -->
+<section id="hero" class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:2;text-align:center;padding:0 16px;max-width:900px;margin:0 auto;padding-top:145px">
+
+    <!-- Crest SVG -->
+    <div class="crest" style="margin:0 auto 24px;width:120px;height:120px">
+      <svg viewBox="0 0 120 120" fill="none" style="width:100%;height:100%">
+        <defs><radialGradient id="sg" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#1a3a6e"/><stop offset="100%" stop-color="#0a1628"/></radialGradient></defs>
+        <path d="M60 5L10 25v35c0 28 20.5 53.3 50 62 29.5-8.7 50-34 50-62V25Z" fill="url(#sg)" stroke="#c9a84c" stroke-width="2"/>
+        <path d="M60 12L17 30v31c0 25 18.5 48 43 56 24.5-8 43-31 43-56V30Z" fill="none" stroke="#c9a84c" stroke-width=".8" opacity=".4"/>
+        <circle cx="60" cy="34" r="3" fill="#c9a84c"/>
+        <circle cx="44" cy="41" r="2" fill="#c9a84c" opacity=".6"/>
+        <circle cx="76" cy="41" r="2" fill="#c9a84c" opacity=".6"/>
+        <path d="M28 76 Q60 66 92 76" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".5"/>
+        <text x="60" y="63" text-anchor="middle" fill="#c9a84c" font-size="12" font-weight="bold" font-family="serif" letter-spacing="2">BPA</text>
+        <text x="60" y="98" text-anchor="middle" fill="#e2c97e" font-size="5.5" font-family="sans-serif" letter-spacing="1">EST. 1912</text>
+      </svg>
+    </div>
+
+    <div style="color:var(--goldl);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:10px" data-i18n="heroGovt">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</div>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,4.5rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:8px">
+      <span data-i18n="heroT1">বাংলাদেশ</span><br>
+      <span style="color:var(--gold)" data-i18n="heroT2">পুলিশ একাডেমি</span>
+    </h1>
+    <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto"></div>
+    <p style="color:var(--silverl);font-size:1rem;margin-bottom:6px" data-i18n="heroLoc">সারদা, রাজশাহী – বাংলাদেশ</p>
+    <p style="color:var(--silver);font-size:.875rem;max-width:580px;margin:0 auto 32px;line-height:1.7" data-i18n="heroTag">১৯১২ সাল থেকে শৃঙ্খলা, জ্ঞান ও সততার মাধ্যমে আইন প্রয়োগে শ্রেষ্ঠত্ব গড়ে তুলছে।</p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+      <a href="#training"  class="btn-p" data-i18n="heroCta1">প্রশিক্ষণ দেখুন</a>
+      <a href="#directory" class="btn-o" data-i18n="heroCta2">অফিসার ডিরেক্টরি</a>
+    </div>
+
+    <!-- Scroll arrow -->
+    <div style="margin-top:48px;opacity:.5">
+      <svg style="width:28px;height:28px;margin:0 auto;animation:float 2s ease-in-out infinite" fill="none" stroke="#c9a84c" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ STATS BAR ════════════ -->
+<div class="stats-bar">
+  <div style="max-width:900px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+    <div class="stat"><div class="stat-num">১১২+</div><div class="stat-lbl" data-i18n="sYears">বছরের শ্রেষ্ঠত্ব</div></div>
+    <div class="stat"><div class="stat-num">৫০হা+</div><div class="stat-lbl" data-i18n="sOff">প্রশিক্ষিত অফিসার</div></div>
+    <div class="stat"><div class="stat-num">২৫+</div><div class="stat-lbl" data-i18n="sCourse">প্রশিক্ষণ কোর্স</div></div>
+    <div class="stat"><div class="stat-num">৪০০+</div><div class="stat-lbl" data-i18n="sAcre">একর ক্যাম্পাস</div></div>
+  </div>
+</div>
+
+<!-- ════════════ HISTORY ════════════ -->
+<section id="history" class="sec">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="hEye">আমাদের ঐতিহ্য</span>
+      <h2 class="sec-h" data-i18n="hTitle">একাডেমির ইতিহাস</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+    </div>
+
+    <!-- TWO COLUMN -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+
+      <!-- Timeline -->
+      <div class="reveal">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-year">১৯১২</div>
+            <strong style="color:var(--gold);font-size:.875rem" data-i18n="ht1">প্রতিষ্ঠা</strong>
+            <p style="color:var(--silver);font-size:.8rem;margin-top:3px;line-height:1.6" data-i18n="hd1">ব্রিটিশ ভারতে বেঙ্গল পুলিশ ট্রেনিং স্কুল হিসেবে প্রতিষ্ঠিত — উপমহাদেশে সংগঠিত পুলিশ প্রশিক্ষণের সূচনা।</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">১৯৪৭</div>
+            <strong style="color:var(--gold);font-size:.875rem" data-i18n="ht2">পাকিস্তান যুগ</strong>
+            <p style="color:var(--silver);font-size:.8rem;margin-top:3px;line-height:1.6" data-i18n="hd2">পূর্ব পাকিস্তান পুলিশ ট্রেনিং স্কুল নামে পুনর্নামকরণ করা হয়।</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">১৯৭১</div>
+            <strong style="color:var(--gold);font-size:.875rem" data-i18n="ht3">মুক্তিযুদ্ধ</strong>
+            <p style="color:var(--silver);font-size:.8rem;margin-top:3px;line-height:1.6" data-i18n="hd3">সারদার পুলিশ অফিসার ও প্রশিক্ষণার্থীরা স্বাধীনতা যুদ্ধে বীরত্বের সাথে অংশগ্রহণ করেন।</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">১৯৭২</div>
+            <strong style="color:var(--gold);font-size:.875rem" data-i18n="ht4">বাংলাদেশ পুলিশ একাডেমি</strong>
+            <p style="color:var(--silver);font-size:.8rem;margin-top:3px;line-height:1.6" data-i18n="hd4">স্বাধীনতার পর আনুষ্ঠানিকভাবে বিপিএ প্রতিষ্ঠিত — বাংলাদেশ পুলিশের শীর্ষ প্রশিক্ষণ প্রতিষ্ঠান।</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">আজ</div>
+            <strong style="color:var(--gold);font-size:.875rem" data-i18n="ht5">আধুনিক উৎকর্ষতা</strong>
+            <p style="color:var(--silver);font-size:.8rem;margin-top:3px;line-height:1.6" data-i18n="hd5">৪০০+ একর আবাসিক ক্যাম্পাসে ৫০,০০০+ অফিসার প্রশিক্ষিত।</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rich text card -->
+      <div class="h-card reveal">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:16px;font-weight:700" data-i18n="hCardTitle">একাডেমির ইতিহাস</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <p style="color:var(--silverl);font-size:.84rem;line-height:1.75" data-i18n="hp1">বাংলাদেশ পুলিশ একাডেমি (বিপিএ), রাজশাহীর সারদায় পদ্মার মনোরম তীরে অবস্থিত, বাংলাদেশ পুলিশের শীর্ষস্থানীয় প্রশিক্ষণ প্রতিষ্ঠান। ১৯১২ সালে ব্রিটিশ ঔপনিবেশিক আমলে প্রতিষ্ঠিত, একাডেমির একশতাধিক বছরের সমৃদ্ধ ঐতিহ্য রয়েছে।</p>
+          <p style="color:var(--silverl);font-size:.84rem;line-height:1.75" data-i18n="hp2">একাডেমি প্রায় ৪০০ একর সবুজ ভূমিতে বিস্তৃত, যেখানে রাইডিং স্কুল, ফায়ারিং রেঞ্জ, সুইমিং পুল, বিশাল প্যারেড গ্রাউন্ড এবং আধুনিক আবাসিক ব্লক রয়েছে।</p>
+          <p style="color:var(--silverl);font-size:.84rem;line-height:1.75" data-i18n="hp3">১৯৭১ সালের পর থেকে বিপিএ রিক্রুট কনস্টেবল থেকে শুরু করে এএসপি প্রবেশনারদের প্রশিক্ষণ দেয় এবং সার্ক দেশসমূহের অফিসারদেরও আয়োজন করে।</p>
+          <p style="color:var(--silverl);font-size:.84rem;line-height:1.75" data-i18n="hp4">সাইবার অপরাধ, সন্ত্রাস দমন, কমিউনিটি পুলিশিং ও মানবাধিকার-ভিত্তিক আইন প্রয়োগসহ আধুনিক চ্যালেঞ্জ মোকাবেলায় পাঠ্যক্রম নিরন্তর উন্নত হচ্ছে।</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ PRINCIPAL ════════════ -->
+<section id="principal" class="sec sec-dark">
+  <div style="max-width:900px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="pEye">নেতৃত্ব</span>
+      <h2 class="sec-h" data-i18n="pTitle">অধ্যক্ষ</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+    </div>
+    <div class="principal-wrap reveal">
+      <div style="display:grid;grid-template-columns:220px 1fr">
+        <!-- Photo col -->
+        <div class="pp-col">
+          <div class="pp-frame">
+            <svg viewBox="0 0 100 100" style="width:52px;height:52px;opacity:.3;color:var(--silver)" fill="currentColor"><path d="M50 10a20 20 0 100 40 20 20 0 000-40zm0 50c-22 0-40 9-40 20v5h80v-5c0-11-18-20-40-20z"/></svg>
+            <span style="font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--silverd)" data-i18n="pPhoto">অধ্যক্ষের ছবি</span>
+          </div>
+          <div class="pp-badge" data-i18n="pBadge">অধ্যক্ষ</div>
+        </div>
+        <!-- Info -->
+        <div style="padding:32px;display:flex;flex-direction:column;justify-content:center">
+          <div style="color:var(--gold);font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:6px" data-i18n="pLabel">মাননীয় অধ্যক্ষ</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;font-weight:700;margin-bottom:4px" data-i18n="pName">মো. আহসান হাবিব খান, বিপিএম</h3>
+          <p style="color:var(--gold);font-size:.82rem;font-weight:500;margin-bottom:16px" data-i18n="pRank">অতিরিক্ত মহাপরিদর্শক (অ্যাডি. আইজিপি)</p>
+          <div style="width:48px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:16px"></div>
+          <blockquote class="quote" data-i18n="pQuote">"বাংলাদেশ পুলিশ একাডেমি আইন প্রয়োগে পেশাদার শ্রেষ্ঠত্বের অভিভাবক। আমাদের লক্ষ্য শুধু অফিসার প্রশিক্ষণ নয়, বরং সততা ও শৃঙ্খলার নেতা গড়ে তোলা।"</blockquote>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px">
+            <div style="background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.1);border-radius:8px;padding:10px;text-align:center">
+              <div style="color:var(--gold);font-weight:700;font-size:1.1rem">৩০+</div>
+              <div style="color:var(--silver);font-size:.68rem" data-i18n="pYrs">বছর সেবা</div>
+            </div>
+            <div style="background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.1);border-radius:8px;padding:10px;text-align:center">
+              <div style="color:var(--gold);font-weight:700;font-size:1.1rem">BPM</div>
+              <div style="color:var(--silver);font-size:.68rem" data-i18n="pMed">পুলিশ পদক</div>
+            </div>
+            <div style="background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.1);border-radius:8px;padding:10px;text-align:center">
+              <div style="color:var(--gold);font-weight:700;font-size:1.1rem">PhD</div>
+              <div style="color:var(--silver);font-size:.68rem" data-i18n="pEdu">যোগ্যতা</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ TRAINING ════════════ -->
+<section id="training" class="sec">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="trEye">পেশাদার উন্নয়ন</span>
+      <h2 class="sec-h" data-i18n="trTitle">প্রশিক্ষণ কোর্সসমূহ</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+      <p style="color:var(--silver);font-size:.875rem;max-width:580px;margin:14px auto 0;line-height:1.7" data-i18n="trSub">বিপিএ দক্ষ, নৈতিক ও পেশাদার আইন প্রয়োগকারী অফিসার গড়ে তুলতে ব্যাপক প্রশিক্ষণ পরিচালনা করে।</p>
+    </div>
+
+    <!-- 3-COL GRID -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+
+      <div class="card reveal" style="--d:0s">
+        <div class="card-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6"/></svg></div>
+        <div style="position:absolute;top:16px;right:16px;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:rgba(201,168,76,.06)">০১</div>
+        <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:8px" data-i18n="tr1T">মৌলিক প্রশিক্ষণ কোর্স</h3>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7;margin-bottom:12px" data-i18n="tr1D">রিক্রুট কনস্টেবলদের জন্য আইন, ড্রিল, শারীরিক সুস্থতা, প্রাথমিক চিকিৎসা ও কমিউনিটি পুলিশিং প্রশিক্ষণ।</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" data-i18n="tr1t1">৬ মাস</span><span class="tag" data-i18n="tr1t2">আবাসিক</span></div>
+      </div>
+
+      <div class="card reveal" style="--d:.08s">
+        <div class="card-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+        <div style="position:absolute;top:16px;right:16px;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:rgba(201,168,76,.06)">০২</div>
+        <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:8px" data-i18n="tr2T">সাব-ইন্সপেক্টর প্রাথমিক প্রশিক্ষণ</h3>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7;margin-bottom:12px" data-i18n="tr2D">ফৌজদারি আইন, তদন্ত কৌশল, সাক্ষ্য পরিচালনা, নেতৃত্ব ও আদালত পদ্ধতির বিস্তারিত প্রশিক্ষণ।</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" data-i18n="tr2t1">১২ মাস</span><span class="tag" data-i18n="tr2t2">নিবিড়</span></div>
+      </div>
+
+      <div class="card reveal" style="--d:.16s">
+        <div class="card-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
+        <div style="position:absolute;top:16px;right:16px;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:rgba(201,168,76,.06)">০৩</div>
+        <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:8px" data-i18n="tr3T">এএসপি প্রবেশনার কোর্স</h3>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7;margin-bottom:12px" data-i18n="tr3D">বিসিএস (পুলিশ) ক্যাডার অফিসারদের প্রশাসন, ফৌজদারি বিচার, সন্ত্রাস দমন ও নেতৃত্ব উন্নয়নের প্রশিক্ষণ।</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" data-i18n="tr3t1">১৮ মাস</span><span class="tag" data-i18n="tr3t2">নির্বাহী</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+        <div style="position:absolute;top:16px;right:16px;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:rgba(201,168,76,.06)">০৪</div>
+        <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:8px" data-i18n="tr4T">সাইবার ক্রাইম বিশেষ কোর্স</h3>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7;margin-bottom:12px" data-i18n="tr4D">ডিজিটাল ফরেনসিক, সাইবার অপরাধ তদন্ত, অনলাইন জালিয়াতি সনাক্তকরণ ও ডিজিটাল সাক্ষ্য সংগ্রহ।</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" data-i18n="tr4t1">৩ মাস</span><span class="tag" data-i18n="tr4t2">ইন-সার্ভিস</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+        <div style="position:absolute;top:16px;right:16px;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:rgba(201,168,76,.06)">০৫</div>
+        <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:8px" data-i18n="tr5T">মানবাধিকার ও নৈতিকতা</h3>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7;margin-bottom:12px" data-i18n="tr5D">আন্তর্জাতিক মানবাধিকার আইন, পুলিশ নৈতিকতা, লিঙ্গ-সংবেদনশীল পুলিশিং ও নির্যাতন প্রতিরোধ।</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" data-i18n="tr5t1">১ মাস</span><span class="tag" data-i18n="tr5t2">সকল পদ</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064"/></svg></div>
+        <div style="position:absolute;top:16px;right:16px;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:rgba(201,168,76,.06)">০৬</div>
+        <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:8px" data-i18n="tr6T">জাতিসংঘ শান্তিরক্ষা প্রি-ডিপ্লয়মেন্ট</h3>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7;margin-bottom:12px" data-i18n="tr6D">জাতিসংঘ মিশনে অফিসারদের বিশেষ প্রস্তুতি — আরওই, সাংস্কৃতিক সচেতনতা ও আন্তর্জাতিক পুলিশিং মান।</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" data-i18n="tr6t1">৬ সপ্তাহ</span><span class="tag" data-i18n="tr6t2">আন্তর্জাতিক</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ TRAINEES ════════════ -->
+<section id="trainees" class="sec sec-dark">
+  <div style="max-width:1100px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="tnEye">যাদের প্রশিক্ষণ দিই</span>
+      <h2 class="sec-h" data-i18n="tnTitle">প্রশিক্ষণার্থীগণ</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+
+      <div class="t-card reveal">
+        <div class="rank-circle">ASP</div>
+        <h4 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin:14px 0 8px" data-i18n="tn1T">এএসপি প্রবেশনার</h4>
+        <p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="tn1D">বিসিএস (পুলিশ) ক্যাডার অফিসার যারা ১৮ মাসের মৌলিক প্রশিক্ষণে আছেন।</p>
+      </div>
+
+      <div class="t-card reveal">
+        <div class="rank-circle">SI</div>
+        <h4 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin:14px 0 8px" data-i18n="tn2T">সাব-ইন্সপেক্টর</h4>
+        <p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="tn2D">নবনিযুক্ত এসআই এবং অভিজ্ঞ এসআই যারা ইন-সার্ভিস রিফ্রেশার কোর্সে আছেন।</p>
+      </div>
+
+      <div class="t-card reveal">
+        <div class="rank-circle">SGT</div>
+        <h4 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin:14px 0 8px" data-i18n="tn3T">সার্জেন্ট</h4>
+        <p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="tn3D">মধ্য-স্তরের নেতৃত্ব ও বিশেষ দক্ষতা উন্নয়ন কার্যক্রমে অংশগ্রহণকারী সার্জেন্ট।</p>
+      </div>
+
+      <div class="t-card reveal">
+        <div class="rank-circle">RC</div>
+        <h4 style="color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin:14px 0 8px" data-i18n="tn4T">রিক্রুট কনস্টেবল</h4>
+        <p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="tn4D">নবনিযুক্ত কনস্টেবল যারা কঠোর মৌলিক প্রশিক্ষণে রয়েছেন।</p>
+      </div>
+
+    </div>
+
+    <!-- International note -->
+    <div class="intl-note reveal">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div style="color:var(--gold);flex-shrink:0;margin-top:2px">
+          <svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064"/></svg>
+        </div>
+        <div>
+          <h4 style="color:var(--gold);font-weight:600;font-size:.9rem;margin-bottom:5px" data-i18n="intT">আন্তর্জাতিক প্রশিক্ষণার্থী</h4>
+          <p style="color:var(--silver);font-size:.8rem;line-height:1.7" data-i18n="intD">বিপিএ ভারত, মিয়ানমার, শ্রীলঙ্কা, নেপাল, ভুটান ও অন্যান্য সার্ক দেশের পুলিশ অফিসারদের বিশেষ প্রশিক্ষণ প্রদান করে, যা এটিকে দক্ষিণ এশিয়ার অন্যতম শীর্ষ পুলিশ প্রশিক্ষণ কেন্দ্র হিসেবে স্বীকৃতি দেয়।</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FACILITIES ════════════ -->
+<section id="facilities" class="sec">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="fEye">ক্যাম্পাস অবকাঠামো</span>
+      <h2 class="sec-h" data-i18n="fTitle">একাডেমির সুবিধাসমূহ</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+    </div>
+
+    <!-- 3×3 GRID -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f1T">ফায়ারিং রেঞ্জ</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f1D">অত্যাধুনিক ইনডোর ও আউটডোর ফায়ারিং রেঞ্জ অস্ত্র প্রশিক্ষণ ও দক্ষতা পরীক্ষার জন্য।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f2T">রাইডিং স্কুল</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f2D">ঐতিহাসিক অশ্বারোহণ সুবিধা সহ সুপ্রশিক্ষিত ঘোড়া, দক্ষ প্রশিক্ষক ও রাইডিং অ্যারেনা।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f3T">জিমনেসিয়াম ও খেলাধুলা</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f3D">আধুনিক ফিটনেস সরঞ্জাম, ইনডোর কোর্ট এবং ডেডিকেটেড যোগব্যায়াম স্টুডিও।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f4T">কম্পিউটার ল্যাব ও আইসিটি সেন্টার</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f4D">হাই-স্পিড ইন্টারনেট সহ ডিজিটাল সাক্ষরতা, সাইবার প্রশিক্ষণ ও ই-লার্নিং প্ল্যাটফর্ম।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f5T">সুইমিং পুল</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f5D">শারীরিক প্রশিক্ষণ ও জলে বেঁচে থাকার দক্ষতা অনুশীলনের জন্য অলিম্পিক-মানের সুইমিং পুল।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f6T">কেন্দ্রীয় পাঠাগার</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f6D">ফৌজদারি আইন, পুলিশ বিজ্ঞান, ফরেনসিক ও অপরাধ বিজ্ঞানে হাজার হাজার গ্রন্থ সংবলিত পাঠাগার।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f7T">মহা প্যারেড মাঠ</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f7D">ড্রিল প্রশিক্ষণ, পাসিং-আউট প্যারেড ও আনুষ্ঠানিক অনুষ্ঠানের জন্য হাজার হাজার ধারণক্ষমতার মাঠ।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/><line x1="12" y1="8" x2="12" y2="16" stroke-width="1.5"/><line x1="8" y1="12" x2="16" y2="12" stroke-width="1.5"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f8T">হাসপাতাল ও চিকিৎসা ইউনিট</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f8D">জরুরি সেবা, বহির্বিভাগ সেবা ও প্রাথমিক চিকিৎসা প্রশিক্ষণ সুবিধা সহ অন-ক্যাম্পাস চিকিৎসা কেন্দ্র।</p></div>
+      </div>
+
+      <div class="fac-card reveal">
+        <div class="fac-top">
+          <svg style="width:36px;height:36px;color:var(--gold);opacity:.65" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        </div>
+        <div class="fac-body"><h3 style="color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:6px;font-family:'Playfair Display',serif" data-i18n="f9T">মসজিদ ও নামাজ ঘর</h3><p style="color:var(--silver);font-size:.78rem;line-height:1.65" data-i18n="f9D">দৈনিক নামাজ, জুমার জামাত ও ধর্মীয় অনুষ্ঠানের জন্য ক্যাম্পাসে বিশাল মসজিদ।</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ DIRECTORY ════════════ -->
+<section id="directory" class="sec sec-dark">
+  <div style="max-width:1100px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="dEye">কর্মীবৃন্দ</span>
+      <h2 class="sec-h" data-i18n="dTitle">অফিসার ও কর্মী পরিচালিকা</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+      <p style="color:var(--silver);font-size:.8rem;margin-top:10px" data-i18n="dSub">বাংলাদেশ পুলিশ একাডেমির অফিসার, প্রশিক্ষক ও কর্মীদের তালিকা।</p>
+    </div>
+
+    <!-- Search row -->
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div style="position:relative;flex:1;min-width:200px">
+        <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--silver)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="srch" class="dir-input" data-i18n-ph="dPH" placeholder="নাম বা পদবী দিয়ে খুঁজুন..." oninput="filterDir()"/>
+      </div>
+      <select id="rnk" class="dir-sel" onchange="filterDir()">
+        <option value="" data-i18n="dAll">সকল পদবী</option>
+        <option value="Addl. IGP">Addl. IGP</option>
+        <option value="DIG">DIG</option>
+        <option value="SP">SP</option>
+        <option value="Addl. SP">Addl. SP</option>
+        <option value="Inspector">Inspector</option>
+        <option value="Sub-Inspector">Sub-Inspector</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:44px">#</th>
+            <th data-i18n="dCN">নাম</th>
+            <th data-i18n="dCD">পদবী</th>
+            <th data-i18n="dCP">ফোন</th>
+            <th data-i18n="dCDep">বিভাগ</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="5" style="text-align:center;padding:40px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+              <div class="spin"></div>
+              <span style="color:var(--silver);font-size:.82rem" data-i18n="dLoad">ডেটাবেস থেকে লোড হচ্ছে...</span>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Status row -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;align-items:center;gap:7px">
+        <div id="dbDot" class="db-dot"></div>
+        <span id="dbTxt" style="color:var(--silver);font-size:.75rem" data-i18n="dConn">ডেটাবেসে সংযুক্ত হচ্ছে...</span>
+      </div>
+      <span id="rcnt" style="color:var(--silverd);font-size:.75rem"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CONTACT ════════════ -->
+<section id="contact" class="sec">
+  <div style="max-width:900px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:52px">
+      <span class="eyebrow" data-i18n="cEye">যোগাযোগ করুন</span>
+      <h2 class="sec-h" data-i18n="cTitle">আমাদের সাথে যোগাযোগ</h2>
+      <div style="width:70px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+
+      <div class="c-card reveal">
+        <div class="c-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        <h4 style="color:var(--gold);font-weight:700;font-size:.9rem;margin-bottom:8px" data-i18n="cAddr">ঠিকানা</h4>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.7" data-i18n="cAddrV">বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী-৬২০৭, বাংলাদেশ</p>
+      </div>
+
+      <div class="c-card reveal">
+        <div class="c-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+        <h4 style="color:var(--gold);font-weight:700;font-size:.9rem;margin-bottom:8px" data-i18n="cPh">ফোন</h4>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.9">
+          <a href="tel:+880721750101" style="color:var(--goldl);text-decoration:none">+880-721-750101</a><br>
+          <a href="tel:+880721750102" style="color:var(--goldl);text-decoration:none">+880-721-750102</a>
+        </p>
+      </div>
+
+      <div class="c-card reveal">
+        <div class="c-icon"><svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+        <h4 style="color:var(--gold);font-weight:700;font-size:.9rem;margin-bottom:8px" data-i18n="cEml">ইমেইল ও ওয়েব</h4>
+        <p style="color:var(--silver);font-size:.8rem;line-height:1.9">
+          <a href="mailto:principal@bpa.gov.bd" style="color:var(--goldl);text-decoration:none">principal@bpa.gov.bd</a><br>
+          <a href="http://bpa.police.gov.bd" target="_blank" style="color:var(--goldl);text-decoration:none">bpa.police.gov.bd</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-bottom:36px">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <svg viewBox="0 0 48 48" style="width:38px;height:38px" fill="none">
+            <path d="M24 3L5 11v14c0 11 8.3 21.3 19 24 10.7-2.7 19-13 19-24V11Z" fill="#0d1f3c" stroke="#c9a84c" stroke-width="1.5"/>
+            <text x="24" y="30" text-anchor="middle" fill="#c9a84c" font-size="10" font-weight="bold" font-family="serif">BPA</text>
+          </svg>
+          <div>
+            <div style="color:var(--gold);font-weight:700;font-size:.82rem" data-i18n="fName">বাংলাদেশ পুলিশ একাডেমি</div>
+            <div style="color:var(--silver);font-size:.68rem" data-i18n="fLoc">সারদা, রাজশাহী</div>
+          </div>
+        </div>
+        <p style="color:var(--silver);font-size:.76rem;line-height:1.7" data-i18n="fTag">১৯১২ সাল থেকে শৃঙ্খলা, সততা ও নিষ্ঠার সাথে সেবা করছে। বাংলাদেশ পুলিশের শীর্ষস্থানীয় প্রশিক্ষণ প্রতিষ্ঠান।</p>
+      </div>
+      <div>
+        <h5 style="color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:12px" data-i18n="fLinks">দ্রুত লিংক</h5>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+          <a href="#history"    class="f-link" data-i18n="navHistory">ইতিহাস</a>
+          <a href="#training"   class="f-link" data-i18n="navTraining">ট্রেনিং</a>
+          <a href="#principal"  class="f-link" data-i18n="navPrincipal">প্রিন্সিপাল</a>
+          <a href="#facilities" class="f-link" data-i18n="navFacilities">সুবিধা</a>
+          <a href="#trainees"   class="f-link" data-i18n="navTrainees">প্রশিক্ষণার্থী</a>
+          <a href="#directory"  class="f-link" data-i18n="navDirectory">পরিচালিকা</a>
+          <a href="#contact"    class="f-link" data-i18n="navContact">যোগাযোগ</a>
+          <a href="http://bpa.police.gov.bd" target="_blank" class="f-link" data-i18n="fOfficial">অফিসিয়াল সাইট</a>
+        </div>
+      </div>
+      <div>
+        <h5 style="color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:12px" data-i18n="fAbout">বিপিএ সম্পর্কে</h5>
+        <p style="color:var(--silver);font-size:.76rem;line-height:1.7" data-i18n="fAboutV">স্বরাষ্ট্র মন্ত্রণালয়ের অধীনে, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার। সকল প্রশিক্ষণ কার্যক্রম বাংলাদেশ পুলিশ সদর দপ্তর, ঢাকা কর্তৃক নিয়ন্ত্রিত।</p>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(201,168,76,.12);padding-top:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px">
+      <span style="color:var(--silverd);font-size:.72rem" data-i18n="fCopy">© ২০২৪ বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী। সর্বস্বত্ব সংরক্ষিত।</span>
+      <span style="color:var(--silverd);font-size:.72rem" data-i18n="fGovt">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="উপরে যান">
+  <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+</button>
+
+<!-- ════════════ RESPONSIVE GRID OVERRIDES ════════════ -->
+<style>
+@media(max-width:900px){
+  #history .grid2{grid-template-columns:1fr!important}
+  #training .grid3{grid-template-columns:repeat(2,1fr)!important}
+  #facilities .grid3{grid-template-columns:repeat(2,1fr)!important}
+  #contact .grid3{grid-template-columns:1fr!important}
+  footer .grid3{grid-template-columns:1fr!important}
+  .principal-wrap [style*="grid-template-columns:220px"]{grid-template-columns:1fr!important}
+}
+@media(max-width:600px){
+  #trainees .grid4{grid-template-columns:repeat(2,1fr)!important}
+  #training .grid3{grid-template-columns:1fr!important}
+  #facilities .grid3{grid-template-columns:1fr!important}
+  .stats-bar [style*="repeat(4"]{grid-template-columns:repeat(2,1fr)!important}
+}
+</style>
+
+<!-- ════════════ JAVASCRIPT ════════════ -->
+<script>
+'use strict';
+
+/* ── Firebase Config ── Replace with your actual config ── */
+const FB_CONFIG = {
+  apiKey:         "YOUR_API_KEY",
+  authDomain:     "YOUR_PROJECT.firebaseapp.com",
+  databaseURL:    "https://YOUR_PROJECT-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:      "YOUR_PROJECT",
+  storageBucket:  "YOUR_PROJECT.appspot.com",
+  messagingSenderId:"YOUR_SENDER_ID",
+  appId:          "YOUR_APP_ID"
+};
+
+/* ── Dummy data (used when Firebase not configured) ── */
+const DUMMY = [
+  {id:'o01',name:'মো. আহসান হাবিব খান, বিপিএম',  designation:'Addl. IGP',    phone:'0721-750101',department:'Administration'},
+  {id:'o02',name:'কামরুজ্জামান তালুকদার, পিপিএম', designation:'DIG',          phone:'0721-750102',department:'Administration'},
+  {id:'o03',name:'মো. আনিসুর রহমান',               designation:'SP',           phone:'0721-750103',department:'Training Wing'},
+  {id:'o04',name:'ফারজানা আক্তার, পিপিএম',        designation:'Addl. SP',     phone:'0721-750104',department:'Training Wing'},
+  {id:'o05',name:'মো. লুৎফুর রহমান',               designation:'Addl. SP',     phone:'0721-750105',department:'Administration'},
+  {id:'o06',name:'মোস্ট. নাসরিন সুলতানা',          designation:'Inspector',    phone:'0721-750106',department:'Physical Training'},
+  {id:'o07',name:'মো. জাহিরুল হক',                 designation:'Inspector',    phone:'0721-750107',department:'Law & Criminology'},
+  {id:'o08',name:'মো. শাহজাহান আলী',               designation:'Sub-Inspector',phone:'0721-750108',department:'Administration'},
+  {id:'o09',name:'মো. মাহবুবুল ইসলাম',             designation:'Sub-Inspector',phone:'0721-750109',department:'ICT Wing'},
+  {id:'o10',name:'মোস্ট. রোকসানা বেগম',            designation:'Sub-Inspector',phone:'0721-750110',department:'Training Wing'},
+  {id:'o11',name:'মো. রফিকুল ইসলাম',               designation:'Sub-Inspector',phone:'0721-750111',department:'Physical Training'},
+  {id:'o12',name:'মো. দেলোয়ার হোসেন',              designation:'Inspector',    phone:'0721-750112',department:'Riding School'},
+  {id:'o13',name:'মো. আবু তাহের',                  designation:'Sub-Inspector',phone:'0721-750113',department:'Firing Range'},
+  {id:'o14',name:'মো. নজরুল ইসলাম, বিপিএম',       designation:'SP',           phone:'0721-750114',department:'Research & Planning'},
+  {id:'o15',name:'মো. ফরহাদ হোসেন',                designation:'Addl. SP',     phone:'0721-750115',department:'Law & Criminology'},
+  {id:'o16',name:'মোস্ট. লায়লা আরজুমান বানু',     designation:'Inspector',    phone:'0721-750116',department:'Admin & Welfare'},
+  {id:'o17',name:'মো. কামালউদ্দিন',                designation:'Sub-Inspector',phone:'0721-750117',department:'Library'},
+  {id:'o18',name:'মো. জাহাঙ্গীর আলম',               designation:'Sub-Inspector',phone:'0721-750118',department:'Driving School'},
+  {id:'o19',name:'মো. রেজাউল করিম',                designation:'Inspector',    phone:'0721-750119',department:'Security'},
+  {id:'o20',name:'মো. আমিনুল ইসলাম সরকার',         designation:'Sub-Inspector',phone:'0721-750120',department:'Physical Training'},
+];
+
+/* ── Translation Dictionary ── */
+const T = {
+bn:{
+  hdrBn:'বাংলাদেশ পুলিশ একাডেমি',
+  hdrEn:'Bangladesh Police Academy',
+  hdrLoc:'সারদা, রাজশাহী | Sarda, Rajshahi',
+  hdrMotto:'উত্তম প্রশিক্ষণ, সর্বোত্তম সেবা',
+  navName:'বাংলাদেশ পুলিশ একাডেমি',navLoc:'সারদা, রাজশাহী',
+  navHistory:'ইতিহাস',navPrincipal:'প্রিন্সিপাল',navTraining:'ট্রেনিং',
+  navTrainees:'প্রশিক্ষণার্থী',navFacilities:'সুবিধা',navDirectory:'পরিচালিকা',navContact:'যোগাযোগ',
+  heroGovt:'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার',heroT1:'বাংলাদেশ',heroT2:'পুলিশ একাডেমি',
+  heroLoc:'সারদা, রাজশাহী – বাংলাদেশ',heroTag:'১৯১২ সাল থেকে শৃঙ্খলা, জ্ঞান ও সততার মাধ্যমে আইন প্রয়োগে শ্রেষ্ঠত্ব গড়ে তুলছে।',
+  heroCta1:'প্রশিক্ষণ দেখুন',heroCta2:'অফিসার ডিরেক্টরি',
+  sYears:'বছরের শ্রেষ্ঠত্ব',sOff:'প্রশিক্ষিত অফিসার',sCourse:'প্রশিক্ষণ কোর্স',sAcre:'একর ক্যাম্পাস',
+  hEye:'আমাদের ঐতিহ্য',hTitle:'একাডেমির ইতিহাস',
+  ht1:'প্রতিষ্ঠা',hd1:'ব্রিটিশ ভারতে বেঙ্গল পুলিশ ট্রেনিং স্কুল হিসেবে প্রতিষ্ঠিত।',
+  ht2:'পাকিস্তান যুগ',hd2:'পূর্ব পাকিস্তান পুলিশ ট্রেনিং স্কুল নামে পুনর্নামকরণ।',
+  ht3:'মুক্তিযুদ্ধ',hd3:'সারদার অফিসার ও প্রশিক্ষণার্থীরা বীরত্বের সাথে স্বাধীনতা যুদ্ধে অংশগ্রহণ করেন।',
+  ht4:'বাংলাদেশ পুলিশ একাডেমি',hd4:'স্বাধীনতার পর আনুষ্ঠানিকভাবে বিপিএ প্রতিষ্ঠিত।',
+  ht5:'আধুনিক উৎকর্ষতা',hd5:'৪০০+ একর ক্যাম্পাসে ৫০,০০০+ অফিসার প্রশিক্ষিত।',
+  hCardTitle:'একাডেমির ইতিহাস',
+  hp1:'বাংলাদেশ পুলিশ একাডেমি (বিপিএ), রাজশাহীর সারদায় পদ্মার তীরে অবস্থিত, বাংলাদেশ পুলিশের শীর্ষস্থানীয় প্রশিক্ষণ প্রতিষ্ঠান। ১৯১২ সালে ব্রিটিশ ঔপনিবেশিক আমলে প্রতিষ্ঠিত।',
+  hp2:'একাডেমি প্রায় ৪০০ একর সবুজ ভূমিতে বিস্তৃত, যেখানে রাইডিং স্কুল, ফায়ারিং রেঞ্জ, সুইমিং পুল ও আধুনিক আবাসিক ব্লক রয়েছে।',
+  hp3:'১৯৭১ সালের পর থেকে বিপিএ রিক্রুট কনস্টেবল থেকে এএসপি প্রবেশনারদের প্রশিক্ষণ দেয় এবং সার্ক দেশের অফিসারদেরও আয়োজন করে।',
+  hp4:'সাইবার অপরাধ, সন্ত্রাস দমন, কমিউনিটি পুলিশিং ও মানবাধিকার-ভিত্তিক আইন প্রয়োগে পাঠ্যক্রম নিরন্তর উন্নত হচ্ছে।',
+  pEye:'নেতৃত্ব',pTitle:'অধ্যক্ষ',pPhoto:'অধ্যক্ষের ছবি',pBadge:'অধ্যক্ষ',pLabel:'মাননীয় অধ্যক্ষ',
+  pName:'মো. আহসান হাবিব খান, বিপিএম',pRank:'অতিরিক্ত মহাপরিদর্শক (অ্যাডি. আইজিপি)',
+  pQuote:'"বাংলাদেশ পুলিশ একাডেমি আইন প্রয়োগে পেশাদার শ্রেষ্ঠত্বের অভিভাবক। আমাদের লক্ষ্য শুধু অফিসার প্রশিক্ষণ নয়, বরং সততা ও শৃঙ্খলার নেতা গড়ে তোলা।"',
+  pYrs:'বছর সেবা',pMed:'পুলিশ পদক',pEdu:'যোগ্যতা',
+  trEye:'পেশাদার উন্নয়ন',trTitle:'প্রশিক্ষণ কোর্সসমূহ',trSub:'বিপিএ দক্ষ ও পেশাদার আইন প্রয়োগকারী অফিসার গড়ে তুলতে ব্যাপক প্রশিক্ষণ পরিচালনা করে।',
+  tr1T:'মৌলিক প্রশিক্ষণ কোর্স',tr1D:'রিক্রুট কনস্টেবলদের জন্য আইন, ড্রিল, শারীরিক সুস্থতা ও কমিউনিটি পুলিশিং প্রশিক্ষণ।',tr1t1:'৬ মাস',tr1t2:'আবাসিক',
+  tr2T:'সাব-ইন্সপেক্টর প্রাথমিক প্রশিক্ষণ',tr2D:'ফৌজদারি আইন, তদন্ত কৌশল ও আদালত পদ্ধতির বিস্তারিত প্রশিক্ষণ।',tr2t1:'১২ মাস',tr2t2:'নিবিড়',
+  tr3T:'এএসপি প্রবেশনার কোর্স',tr3D:'প্রশাসন, ফৌজদারি বিচার, সন্ত্রাস দমন ও নেতৃত্ব উন্নয়নের প্রশিক্ষণ।',tr3t1:'১৮ মাস',tr3t2:'নির্বাহী',
+  tr4T:'সাইবার ক্রাইম বিশেষ কোর্স',tr4D:'ডিজিটাল ফরেনসিক, সাইবার অপরাধ তদন্ত ও ডিজিটাল সাক্ষ্য সংগ্রহ।',tr4t1:'৩ মাস',tr4t2:'ইন-সার্ভিস',
+  tr5T:'মানবাধিকার ও নৈতিকতা',tr5D:'আন্তর্জাতিক মানবাধিকার আইন, পুলিশ নৈতিকতা ও নির্যাতন প্রতিরোধ।',tr5t1:'১ মাস',tr5t2:'সকল পদ',
+  tr6T:'জাতিসংঘ শান্তিরক্ষা প্রি-ডিপ্লয়মেন্ট',tr6D:'জাতিসংঘ মিশনে অফিসারদের বিশেষ প্রস্তুতি।',tr6t1:'৬ সপ্তাহ',tr6t2:'আন্তর্জাতিক',
+  tnEye:'যাদের প্রশিক্ষণ দিই',tnTitle:'প্রশিক্ষণার্থীগণ',
+  tn1T:'এএসপি প্রবেশনার',tn1D:'বিসিএস (পুলিশ) ক্যাডার অফিসার যারা ১৮ মাসের মৌলিক প্রশিক্ষণে আছেন।',
+  tn2T:'সাব-ইন্সপেক্টর',tn2D:'নবনিযুক্ত ও অভিজ্ঞ এসআই যারা প্রশিক্ষণে আছেন।',
+  tn3T:'সার্জেন্ট',tn3D:'মধ্য-স্তরের নেতৃত্ব ও বিশেষ দক্ষতা উন্নয়নে অংশগ্রহণকারী।',
+  tn4T:'রিক্রুট কনস্টেবল',tn4D:'নবনিযুক্ত কনস্টেবল যারা কঠোর মৌলিক প্রশিক্ষণে রয়েছেন।',
+  intT:'আন্তর্জাতিক প্রশিক্ষণার্থী',intD:'বিপিএ ভারত, মিয়ানমার, শ্রীলঙ্কা, নেপাল, ভুটান ও অন্যান্য সার্ক দেশের পুলিশ অফিসারদের বিশেষ প্রশিক্ষণ প্রদান করে।',
+  fEye:'ক্যাম্পাস অবকাঠামো',fTitle:'একাডেমির সুবিধাসমূহ',
+  f1T:'ফায়ারিং রেঞ্জ',f1D:'অত্যাধুনিক ইনডোর ও আউটডোর ফায়ারিং রেঞ্জ।',
+  f2T:'রাইডিং স্কুল',f2D:'ঐতিহাসিক অশ্বারোহণ সুবিধা।',
+  f3T:'জিমনেসিয়াম ও খেলাধুলা',f3D:'আধুনিক ফিটনেস সরঞ্জাম ও ইনডোর কোর্ট।',
+  f4T:'কম্পিউটার ল্যাব ও আইসিটি সেন্টার',f4D:'ডিজিটাল সাক্ষরতা ও সাইবার প্রশিক্ষণ।',
+  f5T:'সুইমিং পুল',f5D:'অলিম্পিক-মানের সুইমিং পুল।',
+  f6T:'কেন্দ্রীয় পাঠাগার',f6D:'হাজার হাজার গ্রন্থ সংবলিত পাঠাগার।',
+  f7T:'মহা প্যারেড মাঠ',f7D:'হাজার হাজার ধারণক্ষমতার মাঠ।',
+  f8T:'হাসপাতাল ও চিকিৎসা ইউনিট',f8D:'অন-ক্যাম্পাস চিকিৎসা কেন্দ্র।',
+  f9T:'মসজিদ ও নামাজ ঘর',f9D:'দৈনিক নামাজ ও জুমার জন্য বিশাল মসজিদ।',
+  dEye:'কর্মীবৃন্দ',dTitle:'অফিসার ও কর্মী পরিচালিকা',dSub:'বাংলাদেশ পুলিশ একাডেমির অফিসার ও কর্মীদের তালিকা।',
+  dPH:'নাম বা পদবী দিয়ে খুঁজুন...',dAll:'সকল পদবী',
+  dCN:'নাম',dCD:'পদবী',dCP:'ফোন',dCDep:'বিভাগ',
+  dLoad:'ডেটাবেস থেকে লোড হচ্ছে...',dConn:'ডেটাবেসে সংযুক্ত হচ্ছে...',
+  dOnline:'Firebase সংযুক্ত – লাইভ ডেটা',dOffline:'অফলাইন ডেটা – Firebase কনফিগার নেই',
+  dNone:'কোনো অফিসার পাওয়া যায়নি।',dShow:'{n} / {t} রেকর্ড',
+  cEye:'যোগাযোগ করুন',cTitle:'আমাদের সাথে যোগাযোগ',
+  cAddr:'ঠিকানা',cAddrV:'বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী-৬২০৭, বাংলাদেশ',
+  cPh:'ফোন',cEml:'ইমেইল ও ওয়েব',
+  fName:'বাংলাদেশ পুলিশ একাডেমি',fLoc:'সারদা, রাজশাহী',
+  fTag:'১৯১২ সাল থেকে শৃঙ্খলা, সততা ও নিষ্ঠার সাথে সেবা করছে।',
+  fLinks:'দ্রুত লিংক',fOfficial:'অফিসিয়াল সাইট',fAbout:'বিপিএ সম্পর্কে',
+  fAboutV:'স্বরাষ্ট্র মন্ত্রণালয়ের অধীনে, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার।',
+  fCopy:'© ২০২৪ বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী। সর্বস্বত্ব সংরক্ষিত।',
+  fGovt:'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার',
+},
+en:{
+  hdrBn:'বাংলাদেশ পুলিশ একাডেমি',
+  hdrEn:'Bangladesh Police Academy',
+  hdrLoc:'Sarda, Rajshahi | সারদা, রাজশাহী',
+  hdrMotto:'Best Training, Best Service',
+  navName:'Bangladesh Police Academy',navLoc:'Sarda, Rajshahi',
+  navHistory:'History',navPrincipal:'Principal',navTraining:'Training',
+  navTrainees:'Trainees',navFacilities:'Facilities',navDirectory:'Directory',navContact:'Contact',
+  heroGovt:"Government of the People's Republic of Bangladesh",heroT1:'Bangladesh',heroT2:'Police Academy',
+  heroLoc:'Sarda, Rajshahi – Bangladesh',heroTag:'Forging excellence in law enforcement through discipline, knowledge, and integrity since 1912.',
+  heroCta1:'Explore Training',heroCta2:'Officer Directory',
+  sYears:'Years of Excellence',sOff:'Officers Trained',sCourse:'Training Courses',sAcre:'Acres of Campus',
+  hEye:'Our Heritage',hTitle:'History of the Academy',
+  ht1:'Foundation',hd1:'Established as Bengal Police Training School during British India.',
+  ht2:'Pakistan Era',hd2:'Renamed East Pakistan Police Training School.',
+  ht3:'Liberation War',hd3:'Sarda officers heroically participated in the Liberation War.',
+  ht4:'Bangladesh Police Academy',hd4:'Formally established as BPA after independence.',
+  ht5:'Modern Excellence',hd5:'400+ acre campus with 50,000+ officers trained.',
+  hCardTitle:'History of the Academy',
+  hp1:'Bangladesh Police Academy (BPA), located at Sarda in Rajshahi on the banks of the Padma, is the apex training institution of Bangladesh Police, founded in 1912.',
+  hp2:'The Academy spans approximately 400 acres with a riding school, firing ranges, swimming pools, parade grounds, and modern residential blocks.',
+  hp3:'Since 1971, BPA trains officers from Recruit Constable to ASP Probationers and hosts officers from SAARC nations.',
+  hp4:'The curriculum continuously evolves to address cybercrime, counter-terrorism, community policing, and human rights-based law enforcement.',
+  pEye:'Leadership',pTitle:'The Principal',pPhoto:"Principal's Photo",pBadge:'Principal',pLabel:"Hon'ble Principal",
+  pName:'Md. Ahsan Habib Khan, BPM',pRank:'Additional Inspector General of Police (Addl. IGP)',
+  pQuote:'"Bangladesh Police Academy stands as the guardian of professional excellence in law enforcement. Our mission is to forge leaders of integrity, discipline, and compassion."',
+  pYrs:'Years Service',pMed:'Police Medal',pEdu:'Qualified',
+  trEye:'Professional Development',trTitle:'Training Courses',trSub:'BPA offers comprehensive training programs to build competent and professional law enforcement officers.',
+  tr1T:'Basic Training Course',tr1D:'Foundation training for Recruit Constables covering law, drill, physical fitness, and community policing.',tr1t1:'6 Months',tr1t2:'Residential',
+  tr2T:'Sub-Inspector Initial Training',tr2D:'Criminal law, investigation techniques, evidence handling, leadership, and court procedures.',tr2t1:'12 Months',tr2t2:'Intensive',
+  tr3T:'ASP Probationer Course',tr3D:'Administration, criminal justice, counter-terrorism, public order, and leadership development.',tr3t1:'18 Months',tr3t2:'Executive',
+  tr4T:'Cyber Crime Specialist Course',tr4D:'Digital forensics, cybercrime investigation, online fraud detection, and digital evidence.',tr4t1:'3 Months',tr4t2:'In-Service',
+  tr5T:'Human Rights & Ethics',tr5D:'International human rights law, police ethics, gender-sensitive policing, and torture prevention.',tr5t1:'1 Month',tr5t2:'All Ranks',
+  tr6T:'UN Peacekeeping Pre-Deployment',tr6D:'Special preparation for UN peacekeeping missions — ROE and international policing standards.',tr6t1:'6 Weeks',tr6t2:'International',
+  tnEye:'Who We Train',tnTitle:'Our Trainees',
+  tn1T:'ASP Probationers',tn1D:'BCS (Police) cadre officers in 18-month foundational training.',
+  tn2T:'Sub-Inspectors',tn2D:'Newly recruited and in-service SIs attending training courses.',
+  tn3T:'Sergeants',tn3D:'Mid-level leadership and specialized skill development programs.',
+  tn4T:'Recruit Constables',tn4D:'Newly recruited constables in the rigorous Basic Training Course.',
+  intT:'International Trainees',intD:'BPA hosts police officers from India, Myanmar, Sri Lanka, Nepal, Bhutan, and other SAARC countries for specialized training.',
+  fEye:'Campus Infrastructure',fTitle:'Academy Facilities',
+  f1T:'Firing Range',f1D:'State-of-the-art indoor and outdoor firing ranges.',
+  f2T:'Riding School',f2D:'Historic equestrian facility with trained horses and instructors.',
+  f3T:'Gymnasium & Sports',f3D:'Modern gym, weight rooms, and indoor sports courts.',
+  f4T:'Computer Lab & ICT Center',f4D:'High-speed internet, cyber training, and e-learning platforms.',
+  f5T:'Swimming Pool',f5D:'Olympic-standard swimming pool for physical training.',
+  f6T:'Central Library',f6D:'Thousands of volumes on law, forensics, and criminology.',
+  f7T:'Grand Parade Ground',f7D:'Vast parade ground for drills and passing-out parades.',
+  f8T:'Hospital & Medical Unit',f8D:'On-campus medical facility with emergency services.',
+  f9T:'Mosque & Prayer Hall',f9D:'Grand mosque for daily prayers and religious observances.',
+  dEye:'Personnel',dTitle:'Officer & Staff Directory',dSub:'Search officers, instructors, and administrative staff of BPA.',
+  dPH:'Search by name or designation...',dAll:'All Designations',
+  dCN:'Name',dCD:'Designation',dCP:'Phone',dCDep:'Department',
+  dLoad:'Loading officer data from database...',dConn:'Connecting to Firebase...',
+  dOnline:'Connected to Firebase – live data',dOffline:'Offline data – Firebase not configured',
+  dNone:'No officers found matching your search.',dShow:'Showing {n} of {t}',
+  cEye:'Get In Touch',cTitle:'Contact Us',
+  cAddr:'Address',cAddrV:'Bangladesh Police Academy, Sarda, Rajshahi-6207, Bangladesh',
+  cPh:'Phone',cEml:'Email & Web',
+  fName:'Bangladesh Police Academy',fLoc:'Sarda, Rajshahi',
+  fTag:'Serving with discipline, integrity, and dedication since 1912.',
+  fLinks:'Quick Links',fOfficial:'Official Site',fAbout:'About BPA',
+  fAboutV:"Under the Ministry of Home Affairs, Government of the People's Republic of Bangladesh.",
+  fCopy:'© 2024 Bangladesh Police Academy, Sarda, Rajshahi. All rights reserved.',
+  fGovt:"Government of the People's Republic of Bangladesh",
+}};
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let lang      = 'bn';
+let allData   = [];
+
+/* ══════════════════════════════════════
+   LANGUAGE TOGGLE
+══════════════════════════════════════ */
+function toggleLang(){
+  lang = lang==='bn'?'en':'bn';
+  applyLang();
+  document.getElementById('langLbl').textContent = lang==='bn'?'English':'বাংলা';
+  document.documentElement.lang = lang;
+}
+
+function applyLang(){
+  const t = T[lang];
+  /* text nodes */
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(t[k]!==undefined) el.textContent=t[k];
+  });
+  /* placeholders */
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k=el.dataset.i18nPh;
+    if(t[k]!==undefined) el.placeholder=t[k];
+  });
+  /* update record count */
+  updateCount(document.querySelectorAll('#tbody tr[data-id]').length, allData.length);
+}
+
+/* ══════════════════════════════════════
+   FIREBASE + TABLE
+══════════════════════════════════════ */
+function fbConfigured(){
+  return FB_CONFIG.apiKey && FB_CONFIG.apiKey!=='YOUR_API_KEY'
+      && FB_CONFIG.databaseURL && !FB_CONFIG.databaseURL.includes('YOUR_PROJECT');
+}
+
+function initFirebase(){
+  const dot  = document.getElementById('dbDot');
+  const txt  = document.getElementById('dbTxt');
+  if(!fbConfigured()){
+    setTimeout(()=>{
+      populate(DUMMY);
+      dot.className='db-dot';dot.style.background='#facc15';dot.style.animation='none';
+      txt.textContent=T[lang].dOffline;
+    },700);
+    return;
+  }
+  try{
+    if(!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
+    firebase.database().ref('/officers').on('value',snap=>{
+      const v=snap.val();
+      populate(v ? Object.keys(v).map(k=>({id:k,...v[k]})) : DUMMY);
+      dot.className='db-dot green';
+      txt.textContent=T[lang].dOnline;
+    },()=>{
+      populate(DUMMY);
+      dot.className='db-dot red';dot.style.animation='none';
+      txt.textContent=T[lang].dOffline;
+    });
+  }catch(e){populate(DUMMY);}
+}
+
+function populate(data){
+  allData=data;
+  renderRows(data);
+}
+
+function renderRows(data){
+  const tb=document.getElementById('tbody');
+  if(!data||!data.length){
+    tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--silver);font-size:.82rem">${T[lang].dNone}</td></tr>`;
+    updateCount(0,allData.length);return;
+  }
+  tb.innerHTML=data.map((o,i)=>{
+    const bc = /igp|dig/i.test(o.designation)?'badge-s':/sp|addl/i.test(o.designation)?'badge-m':'badge-j';
+    return `<tr data-id="${esc(o.id)}">
+      <td style="text-align:center;color:var(--silverd);font-size:.75rem">${i+1}</td>
+      <td style="font-weight:500;color:#fff">${esc(o.name||'—')}</td>
+      <td><span class="badge ${bc}">${esc(o.designation||'—')}</span></td>
+      <td>${o.phone?`<a href="tel:${esc(o.phone)}" class="ph-link">${esc(o.phone)}</a>`:'—'}</td>
+      <td style="color:var(--silver);font-size:.78rem">${esc(o.department||'—')}</td>
+    </tr>`;
+  }).join('');
+  updateCount(data.length,allData.length);
+}
+
+function filterDir(){
+  const q=(document.getElementById('srch').value||'').toLowerCase().trim();
+  const r=(document.getElementById('rnk').value||'').toLowerCase();
+  renderRows(allData.filter(o=>{
+    const nm=(o.name+o.designation+(o.department||'')).toLowerCase();
+    return(!q||nm.includes(q))&&(!r||o.designation.toLowerCase().includes(r));
+  }));
+}
+
+function updateCount(n,t){
+  const el=document.getElementById('rcnt');
+  if(!el)return;
+  el.textContent=n===t
+    ?`${t} ${lang==='bn'?'টি রেকর্ড':'records'}`
+    :(T[lang].dShow||'{n}/{t}').replace('{n}',n).replace('{t}',t);
+}
+
+function esc(s){
+  const d=document.createElement('div');
+  d.appendChild(document.createTextNode(String(s)));
+  return d.innerHTML;
+}
+
+/* ══════════════════════════════════════
+   NAVBAR SCROLL
+══════════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  const hdr=document.getElementById('site-header');
+  const btt=document.getElementById('btt');
+  if(window.scrollY>60) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
+  if(window.scrollY>400) btt.classList.add('show'); else btt.classList.remove('show');
+},{passive:true});
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════ */
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay=(i%4)*.08+'s';
+    obs.observe(el);
+  });
+}
+
+/* ══════════════════════════════════════
+   MOBILE MENU
+══════════════════════════════════════ */
+function toggleMob(){document.getElementById('mob-menu').classList.toggle('open');}
+function closeMob(){document.getElementById('mob-menu').classList.remove('open');}
+document.addEventListener('click',e=>{
+  const m=document.getElementById('mob-menu');
+  const b=document.querySelector('.ham');
+  if(m.classList.contains('open')&&!m.contains(e.target)&&!b.contains(e.target)) closeMob();
+});
+
+/* ══════════════════════════════════════
+   SMOOTH SCROLL FIX (works for all anchor hrefs)
+══════════════════════════════════════ */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]');
+  if(!a) return;
+  const id=a.getAttribute('href').slice(1);
+  const target=document.getElementById(id);
+  if(!target) return;
+  e.preventDefault();
+  const offset=140; // new header height (banner + nav strip)
+  const top=target.getBoundingClientRect().top+window.scrollY-offset;
+  window.scrollTo({top,behavior:'smooth'});
+  closeMob();
+});
+
+/* ══════════════════════════════════════
+   RESPONSIVE GRID FIX via JS
+══════════════════════════════════════ */
+function applyGridBreakpoints(){
+  const w=window.innerWidth;
+  const cols3=document.querySelectorAll('[style*="repeat(3,1fr)"]');
+  const cols4=document.querySelectorAll('[style*="repeat(4,1fr)"]');
+  cols3.forEach(el=>{
+    const sec=el.closest('section');
+    if(w<=600) el.style.gridTemplateColumns='1fr';
+    else if(w<=900) el.style.gridTemplateColumns='repeat(2,1fr)';
+    else el.style.gridTemplateColumns='repeat(3,1fr)';
+  });
+  cols4.forEach(el=>{
+    if(w<=600) el.style.gridTemplateColumns='repeat(2,1fr)';
+    else el.style.gridTemplateColumns='repeat(4,1fr)';
+  });
+  // principal 2-col
+  const ppGrid=document.querySelector('.principal-wrap [style*="220px"]');
+  if(ppGrid){
+    ppGrid.style.gridTemplateColumns=w<=767?'1fr':'220px 1fr';
+  }
+  // footer grid
+  const fGrid=document.querySelector('footer [style*="repeat(3"]');
+  if(fGrid) fGrid.style.gridTemplateColumns=w<=700?'1fr':'repeat(3,1fr)';
+  // history 2-col
+  const hGrid=document.querySelector('#history [style*="grid-template-columns:1fr 1fr"]');
+  if(hGrid) hGrid.style.gridTemplateColumns=w<=768?'1fr':'1fr 1fr';
+  // contact 3-col
+  const cGrid=document.querySelector('#contact [style*="repeat(3,1fr)"]');
+  if(cGrid) cGrid.style.gridTemplateColumns=w<=700?'1fr':w<=900?'repeat(2,1fr)':'repeat(3,1fr)';
+  // stats 4-col
+  const sGrid=document.querySelector('.stats-bar [style*="repeat(4,1fr)"]');
+  if(sGrid) sGrid.style.gridTemplateColumns=w<=480?'repeat(2,1fr)':'repeat(4,1fr)';
+}
+
+window.addEventListener('resize',applyGridBreakpoints);
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  applyLang();
+  document.getElementById('langLbl').textContent='English';
+  initFirebase();
+  initReveal();
+  applyGridBreakpoints();
+});
+</script>
+</body>
+</html>
