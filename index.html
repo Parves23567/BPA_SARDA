@@ -57,8 +57,12 @@ body{background:var(--bg);font-family:'Hind Siliguri','Inter',sans-serif;color:v
 }
 .hdr-logo-box img, .hdr-logo-box-r img{
   width:58px;height:58px;object-fit:contain;
-  filter:drop-shadow(0 1px 4px rgba(0,0,0,.3));
-  mix-blend-mode:screen;
+  mix-blend-mode:multiply;
+  filter:contrast(1.1) brightness(0.95);
+}
+/* multiply removes white bg on dark header */
+.hdr-logo-box, .hdr-logo-box-r{
+  background:transparent;
 }
 .hdr-center{text-align:center}
 .hdr-title-bn{
