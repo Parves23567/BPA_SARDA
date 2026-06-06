@@ -384,6 +384,30 @@ footer{
 footer .f-copy{color:rgba(255,255,255,.5);font-size:.72rem;line-height:1.8}
 footer .f-govt{color:var(--accent-light);font-size:.72rem;font-weight:600}
 
+/* ══ LOCATION CARD ══ */
+.gc-location{
+  position:relative;
+  background:linear-gradient(135deg,#fff5f5,#fff);
+  border-color:#fecaca;
+}
+.gc-location:active{border-color:#dc2626}
+.gc-location .gc-lbl{color:#dc2626}
+/* Pulse animation on location pin */
+@keyframes mapPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.gc-location .gc-icon{animation:mapPulse 2s ease-in-out infinite}
+/* Map box slide-in */
+#map-box{transition:all .3s ease}
+
+/* ══ DIRECTORY CATEGORY CARDS ══ */
+.dir-cat-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:12px;padding:14px;cursor:pointer;
+  box-shadow:var(--shadow);transition:all .18s;
+  -webkit-tap-highlight-color:transparent;
+}
+.dir-cat-card:active{transform:scale(.98);border-color:var(--accent)}
+.dir-cat-card:hover{box-shadow:var(--shadow2)}
+
 /* ══ REVEAL ══ */
 .rv{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
 .rv.on{opacity:1;transform:none}
@@ -521,7 +545,56 @@ footer .f-govt{color:var(--accent-light);font-size:.72rem;font-weight:600}
       </div>
       <span class="gc-lbl" data-i18n="navContact">যোগাযোগ</span>
     </div>
+
+    <!-- লোকেশন — Google Maps -->
+    <div class="gc gc-location" onclick="openLocation()">
+      <div class="gc-icon">
+        <svg viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" fill="#fef2f2"/>
+          <!-- Map pin -->
+          <path d="M32 12c-8.3 0-15 6.7-15 15 0 10.5 15 25 15 25s15-14.5 15-25c0-8.3-6.7-15-15-15z" fill="#dc2626"/>
+          <circle cx="32" cy="27" r="6" fill="#fff"/>
+          <!-- Pulse ring -->
+          <circle cx="32" cy="52" r="4" fill="#dc2626" opacity=".25"/>
+          <circle cx="32" cy="52" r="2" fill="#dc2626" opacity=".45"/>
+        </svg>
+      </div>
+      <span class="gc-lbl" data-i18n="navLocation">লোকেশন</span>
+    </div>
+
+  </div><!-- /grid-wrap -->
+
+  <!-- Embedded Google Map (toggle) -->
+  <div id="map-box" style="display:none;margin-top:14px;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.12);border:1.5px solid var(--border)">
+    <div style="background:var(--primary);padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg style="width:16px;height:16px;color:#ef4444" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span style="color:#fff;font-size:.78rem;font-weight:600" data-i18n="mapTitle">বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="https://maps.google.com/?q=Bangladesh+Police+Academy+Sarda+Rajshahi" target="_blank"
+           style="background:#dc2626;color:#fff;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:6px;text-decoration:none;display:flex;align-items:center;gap:4px">
+          <svg style="width:11px;height:11px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          <span data-i18n="mapOpen">Google Maps এ খুলুন</span>
+        </a>
+        <button onclick="closeMap()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">✕</button>
+      </div>
+    </div>
+    <iframe
+      id="gmap-iframe"
+      src=""
+      data-src="https://maps.google.com/maps?q=Bangladesh+Police+Academy+Sarda+Rajshahi+Bangladesh&output=embed&z=15"
+      width="100%" height="300"
+      style="border:0;display:block"
+      allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div style="background:var(--surface2);padding:8px 14px;display:flex;align-items:center;gap:6px">
+      <svg style="width:13px;height:13px;color:var(--text3)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+      <span style="color:var(--text3);font-size:.72rem" data-i18n="mapAddr">সারদা, রাজশাহী-৬২০৭, বাংলাদেশ</span>
+    </div>
   </div>
+
 </div>
 
 <!-- ══ DETAIL PAGE ══ -->
@@ -561,26 +634,31 @@ const FB={
 
 /* ═══ DUMMY DATA ═══ */
 const OFFICERS=[
-  {id:'o01',name:'মো. আহসান হাবিব খান, বিপিএম',  designation:'Addl. IGP',    phone:'0721-750101',department:'Administration'},
-  {id:'o02',name:'কামরুজ্জামান তালুকদার, পিপিএম', designation:'DIG',          phone:'0721-750102',department:'Administration'},
-  {id:'o03',name:'মো. আনিসুর রহমান',               designation:'SP',           phone:'0721-750103',department:'Training Wing'},
-  {id:'o04',name:'ফারজানা আক্তার, পিপিএম',        designation:'Addl. SP',     phone:'0721-750104',department:'Training Wing'},
-  {id:'o05',name:'মো. লুৎফুর রহমান',               designation:'Addl. SP',     phone:'0721-750105',department:'Administration'},
-  {id:'o06',name:'মোস্ট. নাসরিন সুলতানা',          designation:'Inspector',    phone:'0721-750106',department:'Physical Training'},
-  {id:'o07',name:'মো. জাহিরুল হক',                 designation:'Inspector',    phone:'0721-750107',department:'Law & Criminology'},
-  {id:'o08',name:'মো. শাহজাহান আলী',               designation:'Sub-Inspector',phone:'0721-750108',department:'Administration'},
-  {id:'o09',name:'মো. মাহবুবুল ইসলাম',             designation:'Sub-Inspector',phone:'0721-750109',department:'ICT Wing'},
-  {id:'o10',name:'মোস্ট. রোকসানা বেগম',            designation:'Sub-Inspector',phone:'0721-750110',department:'Training Wing'},
-  {id:'o11',name:'মো. রফিকুল ইসলাম',               designation:'Sub-Inspector',phone:'0721-750111',department:'Physical Training'},
-  {id:'o12',name:'মো. দেলোয়ার হোসেন',              designation:'Inspector',    phone:'0721-750112',department:'Riding School'},
-  {id:'o13',name:'মো. আবু তাহের',                  designation:'Sub-Inspector',phone:'0721-750113',department:'Firing Range'},
-  {id:'o14',name:'মো. নজরুল ইসলাম, বিপিএম',       designation:'SP',           phone:'0721-750114',department:'Research & Planning'},
-  {id:'o15',name:'মো. ফরহাদ হোসেন',                designation:'Addl. SP',     phone:'0721-750115',department:'Law & Criminology'},
-  {id:'o16',name:'মোস্ট. লায়লা আরজুমান বানু',     designation:'Inspector',    phone:'0721-750116',department:'Admin & Welfare'},
-  {id:'o17',name:'মো. কামালউদ্দিন',                designation:'Sub-Inspector',phone:'0721-750117',department:'Library'},
-  {id:'o18',name:'মো. জাহাঙ্গীর আলম',               designation:'Sub-Inspector',phone:'0721-750118',department:'Driving School'},
-  {id:'o19',name:'মো. রেজাউল করিম',                designation:'Inspector',    phone:'0721-750119',department:'Security'},
-  {id:'o20',name:'মো. আমিনুল ইসলাম সরকার',         designation:'Sub-Inspector',phone:'0721-750120',department:'Physical Training'},
+  /* ── ইন্সপেক্টর ও তদূর্ধ্ব ── */
+  {id:'o01',name:'মো. আহসান হাবিব খান, বিপিএম',   designation:'Addl. IGP',    phone:'0721-750101',department:'Administration'},
+  {id:'o02',name:'কামরুজ্জামান তালুকদার, পিপিএম',  designation:'DIG',          phone:'0721-750102',department:'Administration'},
+  {id:'o03',name:'মো. আনিসুর রহমান',                designation:'SP',           phone:'0721-750103',department:'Training Wing'},
+  {id:'o04',name:'ফারজানা আক্তার, পিপিএম',         designation:'Addl. SP',     phone:'0721-750104',department:'Training Wing'},
+  {id:'o05',name:'মো. লুৎফুর রহমান',                designation:'Addl. SP',     phone:'0721-750105',department:'Administration'},
+  {id:'o06',name:'মো. নজরুল ইসলাম, বিপিএম',        designation:'SP',           phone:'0721-750114',department:'Research & Planning'},
+  {id:'o07',name:'মো. ফরহাদ হোসেন',                 designation:'Addl. DIG',    phone:'0721-750115',department:'Law & Criminology'},
+  {id:'o08',name:'মো. জাহিরুল হক',                  designation:'ASP',          phone:'0721-750107',department:'Law & Criminology'},
+  {id:'o09',name:'মোস্ট. নাসরিন সুলতানা',           designation:'Inspector-SB', phone:'0721-750106',department:'Physical Training'},
+  {id:'o10',name:'মো. দেলোয়ার হোসেন',               designation:'Inspector-UB', phone:'0721-750112',department:'Riding School'},
+  {id:'o11',name:'মোস্ট. লায়লা আরজুমান বানু',      designation:'Inspector-SB', phone:'0721-750116',department:'Admin & Welfare'},
+  {id:'o12',name:'মো. রেজাউল করিম',                 designation:'Inspector-UB', phone:'0721-750119',department:'Security'},
+  /* ── সাব-ইন্সপেক্টর ও তদনিম্ন ── */
+  {id:'o13',name:'মো. শাহজাহান আলী',                designation:'Sub-Inspector-UB',phone:'0721-750108',department:'Administration'},
+  {id:'o14',name:'মো. মাহবুবুল ইসলাম',              designation:'Sub-Inspector-SB',phone:'0721-750109',department:'ICT Wing'},
+  {id:'o15',name:'মোস্ট. রোকসানা বেগম',             designation:'Sub-Inspector-UB',phone:'0721-750110',department:'Training Wing'},
+  {id:'o16',name:'মো. রফিকুল ইসলাম',                designation:'Sub-Inspector-SB',phone:'0721-750111',department:'Physical Training'},
+  {id:'o17',name:'মো. আবু তাহের',                   designation:'Sub-Inspector-UB',phone:'0721-750113',department:'Firing Range'},
+  {id:'o18',name:'মো. কামালউদ্দিন',                 designation:'ASI-UB',       phone:'0721-750117',department:'Library'},
+  {id:'o19',name:'মো. জাহাঙ্গীর আলম',                designation:'ASI-SB',       phone:'0721-750118',department:'Driving School'},
+  {id:'o20',name:'মো. আমিনুল ইসলাম সরকার',          designation:'Nayek',        phone:'0721-750120',department:'Physical Training'},
+  {id:'o21',name:'মো. সাইফুল ইসলাম',                designation:'Constable',    phone:'0721-750121',department:'Security'},
+  {id:'o22',name:'মোস্ট. সুমাইয়া বেগম',             designation:'Constable',    phone:'0721-750122',department:'Administration'},
+  {id:'o23',name:'মো. হাবিবুর রহমান',                designation:'Nayek',        phone:'0721-750123',department:'Training Wing'},
 ];
 let allOfficers=[...OFFICERS];
 
@@ -600,6 +678,10 @@ bn:{
   dCN:'নাম',dCD:'পদবী',dCP:'ফোন',dCDep:'বিভাগ',
   dPH:'নাম বা পদবী দিয়ে খুঁজুন...',dAll:'সকল পদবী',
   dLoad:'লোড হচ্ছে...',dNone:'কোনো অফিসার পাওয়া যায়নি।',
+  navLocation:'লোকেশন',
+  mapTitle:'বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী',
+  mapOpen:'Google Maps এ খুলুন',
+  mapAddr:'সারদা, রাজশাহী-৬২০৭, বাংলাদেশ',
   dOnline:'Firebase সংযুক্ত',dOffline:'অফলাইন ডেটা',
 },
 en:{
@@ -616,6 +698,10 @@ en:{
   dCN:'Name',dCD:'Designation',dCP:'Phone',dCDep:'Department',
   dPH:'Search by name or designation...',dAll:'All Designations',
   dLoad:'Loading...',dNone:'No officers found.',
+  navLocation:'Location',
+  mapTitle:'Bangladesh Police Academy, Sarda, Rajshahi',
+  mapOpen:'Open in Google Maps',
+  mapAddr:'Sarda, Rajshahi-6207, Bangladesh',
   dOnline:'Firebase connected',dOffline:'Offline data',
 }};
 
@@ -730,31 +816,100 @@ ${[
 directory:()=>`
 <div class="detail-header rv">
   <div class="detail-eyebrow">${lang==='bn'?'কর্মীবৃন্দ':'Personnel'}</div>
-  <div class="detail-title">${lang==='bn'?'অফিসার পরিচালিকা':'Officer Directory'}</div>
+  <div class="detail-title">${lang==='bn'?'অফিসার ও ফোর্সের তালিকা':'Officer & Force Directory'}</div>
 </div>
-<div class="dir-search-wrap rv">
-  <svg style="width:16px;height:16px;color:var(--text3);flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-  <input type="text" id="srch" class="dir-search" placeholder="${T[lang].dPH}" oninput="filterDir()"/>
-</div>
-<select id="rnk" class="dir-sel rv" onchange="filterDir()">
-  <option value="">${T[lang].dAll}</option>
-  <option value="Addl. IGP">Addl. IGP</option>
-  <option value="DIG">DIG</option>
-  <option value="SP">SP</option>
-  <option value="Addl. SP">Addl. SP</option>
-  <option value="Inspector">Inspector</option>
-  <option value="Sub-Inspector">Sub-Inspector</option>
-</select>
-<div id="officer-list">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px 0">
-    <div class="spin"></div>
-    <span style="color:var(--text3);font-size:.8rem">${T[lang].dLoad}</span>
+
+<!-- ══ TWO CATEGORY SELECTOR ══ -->
+<div id="dir-home" class="rv">
+  <p style="color:var(--text2);font-size:.8rem;margin-bottom:14px;text-align:center">
+    ${lang==='bn'?'নিচের যেকোনো একটি বিভাগ বেছে নিন:':'Select a category below:'}
+  </p>
+
+  <!-- Category 1: Inspector & Above -->
+  <div class="dir-cat-card" onclick="openDirCat('upper')" style="border-left:4px solid #1d4ed8;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="width:48px;height:48px;border-radius:12px;background:#dbeafe;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg style="width:26px;height:26px;color:#1d4ed8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+        </svg>
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:.92rem;color:var(--primary);margin-bottom:3px">
+          ${lang==='bn'?'ইন্সপেক্টর ও তদূর্ধ্ব':'Inspector & Above'}
+        </div>
+        <div style="font-size:.72rem;color:var(--text3);line-height:1.5">
+          ${lang==='bn'?'ইন্সপেক্টর (নি:) • ইন্সপেক্টর (স:) • এএসপি • অ্যাডি. এসপি • এসপি • অ্যাডি. ডিআইজি • ডিআইজি':'Inspector (UB) • Inspector (SB) • ASP • Addl. SP • SP • Addl. DIG • DIG'}
+        </div>
+      </div>
+      <svg style="width:18px;height:18px;color:var(--text3);flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+
+  <!-- Category 2: Sub-Inspector & Below -->
+  <div class="dir-cat-card" onclick="openDirCat('lower')" style="border-left:4px solid #16a34a">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="width:48px;height:48px;border-radius:12px;background:#dcfce7;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg style="width:26px;height:26px;color:#16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:.92rem;color:var(--primary);margin-bottom:3px">
+          ${lang==='bn'?'সাব-ইন্সপেক্টর ও তদনিম্ন':'Sub-Inspector & Below'}
+        </div>
+        <div style="font-size:.72rem;color:var(--text3);line-height:1.5">
+          ${lang==='bn'?'এসআই (নি:) • এসআই (স:) • এএসআই (নি:) • এএসআই (স:) • নায়েক • কনস্টেবল':'SI (UB) • SI (SB) • ASI (UB) • ASI (SB) • Nayek • Constable'}
+        </div>
+      </div>
+      <svg style="width:18px;height:18px;color:var(--text3);flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+
+  <!-- DB status -->
+  <div style="display:flex;align-items:center;gap:7px;margin-top:14px;padding:0 2px">
+    <span id="dbDot" class="db-dot"></span>
+    <span id="dbTxt" style="color:var(--text3);font-size:.7rem">${T[lang].dOffline}</span>
   </div>
 </div>
-<div style="display:flex;align-items:center;gap:7px;margin-top:8px;padding:0 2px">
-  <span id="dbDot" class="db-dot"></span>
-  <span id="dbTxt" style="color:var(--text3);font-size:.7rem">${T[lang].dOffline}</span>
-  <span id="rcnt" style="color:var(--text3);font-size:.7rem;margin-left:auto"></span>
+
+<!-- ══ CATEGORY DETAIL (hidden by default) ══ -->
+<div id="dir-cat-view" style="display:none">
+
+  <!-- Back to categories -->
+  <button onclick="closeDirCat()" style="display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1.5px solid var(--border);color:var(--primary);padding:7px 13px;border-radius:9px;cursor:pointer;font-size:.78rem;font-weight:600;margin-bottom:12px;font-family:inherit">
+    <svg style="width:13px;height:13px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+    ${lang==='bn'?'বিভাগে ফিরুন':'Back to Categories'}
+  </button>
+
+  <!-- Category title bar -->
+  <div id="dir-cat-header" style="border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px"></div>
+
+  <!-- Search bar -->
+  <div class="dir-search-wrap" style="margin-bottom:8px">
+    <svg style="width:15px;height:15px;color:var(--text3);flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <input type="text" id="srch" class="dir-search"
+      placeholder="${lang==='bn'?'নাম, ফোন বা পদবী দিয়ে খুঁজুন...':'Search by name, phone or designation...'}"
+      oninput="filterDir()"/>
+    <button onclick="document.getElementById('srch').value='';filterDir()" id="srch-clear"
+      style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:0 2px;display:none">✕</button>
+  </div>
+
+  <!-- Designation filter -->
+  <select id="rnk" class="dir-sel" onchange="filterDir()" style="margin-bottom:10px"></select>
+
+  <!-- Result count -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:0 2px">
+    <span id="rcnt" style="color:var(--text3);font-size:.72rem"></span>
+    <span style="color:var(--text3);font-size:.68rem">${lang==='bn'?'ফোন নম্বরে ক্লিক করে কল করুন':'Tap phone to call'}</span>
+  </div>
+
+  <!-- Officer list -->
+  <div id="officer-list">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px 0">
+      <div class="spin"></div>
+      <span style="color:var(--text3);font-size:.8rem">${T[lang].dLoad}</span>
+    </div>
+  </div>
 </div>`,
 
 contact:()=>`
@@ -778,6 +933,25 @@ ${[
   </a>
 </div>`
 };
+
+/* ═══ LOCATION / MAP ═══ */
+function openLocation(){
+  const box = document.getElementById('map-box');
+  const iframe = document.getElementById('gmap-iframe');
+  if(box.style.display === 'none' || box.style.display === ''){
+    // Lazy load iframe src
+    if(!iframe.src || iframe.src === window.location.href){
+      iframe.src = iframe.dataset.src;
+    }
+    box.style.display = 'block';
+    box.scrollIntoView({behavior:'smooth', block:'nearest'});
+  } else {
+    box.style.display = 'none';
+  }
+}
+function closeMap(){
+  document.getElementById('map-box').style.display = 'none';
+}
 
 /* ═══ LANGUAGE ═══ */
 let lang='bn';
@@ -816,48 +990,157 @@ function openDetail(sec){
   if(sec==='directory') initDir();
 }
 
+/* ═══ DIRECTORY CATEGORY DEFINITIONS ═══ */
+const DIR_CATS = {
+  upper: {
+    color:'#1d4ed8', bg:'#dbeafe',
+    labelBn:'ইন্সপেক্টর ও তদূর্ধ্ব',  labelEn:'Inspector & Above',
+    designations:[
+      {val:'Inspector-UB',    bn:'ইন্সপেক্টর (নি:)',     en:'Inspector (UB)'},
+      {val:'Inspector-SB',    bn:'ইন্সপেক্টর (স:)',      en:'Inspector (SB)'},
+      {val:'ASP',             bn:'এ এসপি',               en:'ASP'},
+      {val:'Addl. SP',        bn:'অ্যাডিশনাল এসপি',     en:'Addl. SP'},
+      {val:'SP',              bn:'এস পি',                en:'SP'},
+      {val:'Addl. DIG',       bn:'অ্যাডিশনাল ডিআইজি',   en:'Addl. DIG'},
+      {val:'DIG',             bn:'ডি আইজি',              en:'DIG'},
+      {val:'Addl. IGP',       bn:'অ্যাডি. আইজিপি',      en:'Addl. IGP'},
+    ]
+  },
+  lower: {
+    color:'#16a34a', bg:'#dcfce7',
+    labelBn:'সাব-ইন্সপেক্টর ও তদনিম্ন', labelEn:'Sub-Inspector & Below',
+    designations:[
+      {val:'Sub-Inspector-UB',bn:'সাব-ইন্সপেক্টর (নি:)', en:'Sub-Inspector (UB)'},
+      {val:'Sub-Inspector-SB',bn:'সাব-ইন্সপেক্টর (স:)',  en:'Sub-Inspector (SB)'},
+      {val:'ASI-UB',          bn:'এএসআই (নি:)',          en:'ASI (UB)'},
+      {val:'ASI-SB',          bn:'এএসআই (স:)',           en:'ASI (SB)'},
+      {val:'Nayek',           bn:'নায়েক',               en:'Nayek'},
+      {val:'Constable',       bn:'কনস্টেবল',            en:'Constable'},
+    ]
+  }
+};
+
+let currentCat = null;
+let catOfficers = [];
+
+/* map designation value → display label */
+function desigLabel(val){
+  for(const cat of Object.values(DIR_CATS)){
+    const d = cat.designations.find(d=>d.val===val);
+    if(d) return lang==='bn'?d.bn:d.en;
+  }
+  return val;
+}
+
+/* which category does a Firebase designation belong to? */
+function getCat(desig){
+  const d = (desig||'').toLowerCase();
+  if(/igp|dig|^sp$|addl\.?\s*sp|^asp$|inspector/i.test(d) && !/sub/i.test(d)) return 'upper';
+  return 'lower';
+}
+
+function openDirCat(cat){
+  currentCat = cat;
+  const info = DIR_CATS[cat];
+
+  /* show cat view, hide home */
+  document.getElementById('dir-home').style.display='none';
+  document.getElementById('dir-cat-view').style.display='block';
+
+  /* header bar */
+  document.getElementById('dir-cat-header').style.background = info.bg;
+  document.getElementById('dir-cat-header').innerHTML=`
+    <svg style="width:20px;height:20px;color:${info.color};flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+    </svg>
+    <span style="font-weight:700;font-size:.9rem;color:${info.color}">${lang==='bn'?info.labelBn:info.labelEn}</span>`;
+
+  /* designation filter options */
+  const rnk = document.getElementById('rnk');
+  rnk.innerHTML = `<option value="">${lang==='bn'?'সকল পদবী':'All Designations'}</option>`;
+  info.designations.forEach(d=>{
+    const opt = document.createElement('option');
+    opt.value = d.val;
+    opt.textContent = lang==='bn'?d.bn:d.en;
+    rnk.appendChild(opt);
+  });
+
+  /* filter allOfficers by category */
+  catOfficers = allOfficers.filter(o=>getCat(o.designation)===cat);
+  renderCards(catOfficers);
+  document.getElementById('srch').value='';
+  const cl=document.getElementById('srch-clear');if(cl)cl.style.display='none';
+}
+
+function closeDirCat(){
+  currentCat=null;
+  document.getElementById('dir-cat-view').style.display='none';
+  document.getElementById('dir-home').style.display='block';
+}
+
 /* ═══ DIRECTORY / FIREBASE ═══ */
 function fbOK(){return FB.apiKey&&FB.apiKey!=='YOUR_API_KEY'&&FB.databaseURL&&!FB.databaseURL.includes('YOUR_PROJECT')}
 function initDir(){
-  if(!fbOK()){setTimeout(()=>{renderCards(OFFICERS);setDbStatus('green',T[lang].dOffline)},400);return;}
+  if(!fbOK()){
+    setTimeout(()=>{
+      allOfficers=[...OFFICERS];
+      setDbStatus('green',T[lang].dOffline);
+    },400);
+    return;
+  }
   try{
     if(!firebase.apps.length) firebase.initializeApp(FB);
     firebase.database().ref('/officers').on('value',snap=>{
       const v=snap.val();
-      const data=v?Object.keys(v).map(k=>({id:k,...v[k]})):OFFICERS;
-      allOfficers=[...data];renderCards(data);setDbStatus('green',T[lang].dOnline);
-    },()=>{renderCards(OFFICERS);setDbStatus('','offline');});
-  }catch(e){renderCards(OFFICERS);}
+      allOfficers=v?Object.keys(v).map(k=>({id:k,...v[k]})):[...OFFICERS];
+      setDbStatus('green',T[lang].dOnline);
+      if(currentCat) openDirCat(currentCat); // refresh if cat open
+    },()=>{allOfficers=[...OFFICERS];setDbStatus('','offline');});
+  }catch(e){allOfficers=[...OFFICERS];}
 }
+
 function setDbStatus(cls,txt){
   const d=document.getElementById('dbDot');const t=document.getElementById('dbTxt');
   if(d){d.className='db-dot '+(cls||'');if(cls==='green')d.style.animation='none';}
   if(t) t.textContent=txt;
 }
+
 function renderCards(data){
   const container=document.getElementById('officer-list');if(!container)return;
+  const rc=document.getElementById('rcnt');
   if(!data||!data.length){
     container.innerHTML=`<div style="text-align:center;padding:28px;color:var(--text3)">${T[lang].dNone}</div>`;
-    return;
+    if(rc)rc.textContent='';return;
   }
-  const bc=des=>/igp|dig/i.test(des)?'bs':/sp|addl/i.test(des)?'bm':'bj';
+  const bcFn=des=>/igp|dig/i.test(des)?'bs':/sp|addl|asp/i.test(des)?'bm':'bj';
   container.innerHTML=data.map((o,i)=>`
     <div class="officer-card">
       <div class="officer-idx">${i+1}</div>
       <div class="officer-info">
         <div class="officer-name">${x(o.name)}</div>
-        <div style="margin:3px 0"><span class="badge ${bc(o.designation)}">${x(o.designation)}</span></div>
+        <div style="margin:3px 0"><span class="badge ${bcFn(o.designation)}">${x(desigLabel(o.designation))}</span></div>
         <div class="officer-dept">${x(o.department||'—')}</div>
       </div>
-      ${o.phone?`<div class="officer-phone"><a href="tel:${x(o.phone)}"><svg style="width:14px;height:14px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>${x(o.phone)}</a></div>`:''}
+      ${o.phone?`<div class="officer-phone"><a href="tel:${x(o.phone)}">
+        <svg style="width:14px;height:14px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        ${x(o.phone)}</a></div>`:''}
     </div>`).join('');
-  const rc=document.getElementById('rcnt');if(rc)rc.textContent=`${data.length}/${allOfficers.length}`;
+  if(rc)rc.textContent=`${lang==='bn'?'মোট':'Total'}: ${data.length}`;
 }
+
 function filterDir(){
-  const q=(document.getElementById('srch')?.value||'').toLowerCase();
-  const r=(document.getElementById('rnk')?.value||'').toLowerCase();
-  renderCards(allOfficers.filter(o=>(!q||(o.name+o.designation+(o.department||'')).toLowerCase().includes(q))&&(!r||o.designation.toLowerCase().includes(r))));
+  const q=(document.getElementById('srch')?.value||'').toLowerCase().trim();
+  const r=(document.getElementById('rnk')?.value||'');
+  const cl=document.getElementById('srch-clear');
+  if(cl)cl.style.display=q?'block':'none';
+  const pool = currentCat ? catOfficers : allOfficers;
+  renderCards(pool.filter(o=>{
+    const matchQ=!q||(o.name+o.phone+o.designation+(o.department||'')).toLowerCase().includes(q);
+    const matchR=!r||o.designation===r||o.designation.includes(r.replace('-UB','').replace('-SB',''));
+    return matchQ&&matchR;
+  }));
 }
+
 function x(s){const d=document.createElement('div');d.appendChild(document.createTextNode(String(s||'')));return d.innerHTML;}
 
 /* ═══ SCROLL ═══ */
