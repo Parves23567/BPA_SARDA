@@ -781,50 +781,290 @@ history:()=>`
 
 principal:()=>`
 <div class="detail-header rv">
-  <div class="detail-eyebrow">${lang==='bn'?'নেতৃত্ব':'Leadership'}</div>
-  <div class="detail-title">${lang==='bn'?'অধ্যক্ষ':'The Principal'}</div>
+  <div class="detail-eyebrow" style="text-transform:none;font-size:.85rem;letter-spacing:.05em">${lang==='bn'?'মাননীয় প্রিন্সিপাল':'Hon\'ble Principal'}</div>
 </div>
 <div class="card rv">
   <div style="display:flex;gap:14px;align-items:flex-start">
     <div>
-      <div class="pp-photo">
-        <svg viewBox="0 0 100 100" style="width:36px;height:36px;opacity:.25;color:#8496b0" fill="currentColor"><path d="M50 10a20 20 0 100 40 20 20 0 000-40zm0 50c-22 0-40 9-40 20v5h80v-5c0-11-18-20-40-20z"/></svg>
-        <span style="font-size:.52rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">${lang==='bn'?'ছবি':'Photo'}</span>
+      <div class="pp-photo" style="overflow:hidden;padding:0;background:none;border:3px solid var(--accent);border-radius:14px;width:88px;height:88px">
+        <img src="data:image/jpeg;base64,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" alt="Principal" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:11px"/>
       </div>
-      <div class="pp-badge-lbl">${lang==='bn'?'অধ্যক্ষ':'Principal'}</div>
+
     </div>
     <div style="flex:1;min-width:0">
-      <div style="color:var(--accent-dark);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:4px">${lang==='bn'?'মাননীয় অধ্যক্ষ':"Hon'ble Principal"}</div>
-      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3">${lang==='bn'?'মো. আহসান হাবিব খান, বিপিএম':'Md. Ahsan Habib Khan, BPM'}</div>
-      <div style="color:var(--primary-light);font-size:.75rem;font-weight:600;margin-bottom:10px">${lang==='bn'?'অতিরিক্ত মহাপরিদর্শক':'Addl. Inspector General'}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${[['৩০+/30+',lang==='bn'?'বছর সেবা':'Yrs Service'],['BPM',lang==='bn'?'পুলিশ পদক':'Police Medal'],['PhD',lang==='bn'?'যোগ্যতা':'Qualified']]
-          .map(([v,l])=>`<div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center;min-width:60px"><div style="color:var(--primary);font-weight:700;font-size:.85rem">${v.includes('/')?v.split('/')[lang==='bn'?0:1]:v}</div><div style="color:var(--text3);font-size:.6rem;margin-top:1px">${l}</div></div>`).join('')}
+      <div style="color:var(--accent-dark);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:4px">${lang==='bn'?'':''}</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3">${lang==='bn'?'জি এম আজিজুর রহমান':'GM Azizur Rahman'}</div>
+      <div style="color:var(--primary-light);font-size:.75rem;font-weight:600;margin-bottom:10px">${lang==='bn'?'অতিরিক্ত মহাপরিদর্শক (Addl. IGP)':'Additional Inspector General (Addl. IGP)'}</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">
+        <a href="tel:01320215600" style="display:flex;align-items:center;gap:7px;background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:7px 12px;text-decoration:none;color:var(--primary);font-size:.78rem;font-weight:600">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          01320-215600
+        </a>
+        <a href="mailto:bpa.principal@police.gov.bd" style="display:flex;align-items:center;gap:7px;background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:7px 12px;text-decoration:none;color:var(--primary);font-size:.73rem;font-weight:600;word-break:break-all">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:15px;height:15px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          bpa.principal@police.gov.bd
+        </a>
       </div>
+      <div style="font-size:.71rem;color:var(--text3);line-height:1.5">${lang==='bn'?'অধ্যক্ষ (অ্যাডি. আইজিপি), বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী':'Principal (Addl. IGP), Bangladesh Police Academy, Sardah, Rajshahi'}</div>
     </div>
   </div>
   <blockquote class="quote-block">${lang==='bn'?'"বাংলাদেশ পুলিশ একাডেমি আইন প্রয়োগে পেশাদার শ্রেষ্ঠত্বের অভিভাবক। আমাদের লক্ষ্য সততা ও শৃঙ্খলার নেতা গড়ে তোলা।"':'"BPA stands as the guardian of professional excellence. Our mission is to forge leaders of integrity and discipline."'}</blockquote>
 </div>`,
 
-training:()=>`
+training:()=>{
+  if(typeof window._trainTab==='undefined') window._trainTab='offered';
+  if(typeof window._trainCat==='undefined') window._trainCat=null;
+  const tab = window._trainTab;
+  const cat = window._trainCat;
+
+  /* ── Course data ── */
+  const OFFERED_GROUPS = [
+    {
+      id:'basic',
+      icon:'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z',
+      color:'#1d4ed8', bg:'#dbeafe',
+      catBn:'বেসিক কোর্স', catEn:'Basic Courses',
+      courses:[
+        ['ASP Probationer','1 Year'],
+        ['Sub Inspector (UB)','1 Year'],
+        ['Sergeant','1 Year'],
+        ['Trainee Recruit Constable (TRC)','4 Months'],
+      ]
+    },
+    {
+      id:'refresher',
+      icon:'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+      color:'#0369a1', bg:'#e0f2fe',
+      catBn:'রিফ্রেশার কোর্স', catEn:"Refresher's Courses",
+      courses:[
+        ["Refresher's Course for SI (AB)",'8 Weeks'],
+      ]
+    },
+    {
+      id:'inservice',
+      icon:'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+      color:'#15803d', bg:'#dcfce7',
+      catBn:'ইন-সার্ভিস কোর্স', catEn:'In-Service Course',
+      courses:[
+        ['Forester Course','10 Weeks'],
+        ['Section Leader\'s Course for ASI (AB)','4 Months'],
+        ['Basic Security & Protection Course (BS&P) for Civil Security Members of Jatio Sangsad','6 Months'],
+        ['Operational and Strategic Planning Course (for DIG/Addl DIG)','1 Week'],
+        ['Tactical & Operational Training Course (for SP)','1 Week'],
+        ['Crime Administration Course (for Inspector UB)','1 Week'],
+        ['Orientation Course for Health Professionals (OCHP)','2 Weeks'],
+        ['ToT Firearms Safety','1 Week'],
+        ['Basic Law Enforcement Skills (BLES) Course for Dept. of Drug & Narcotics Control','3 Months'],
+        ['Refreshers Course for the Members of DNC','35 Days'],
+      ]
+    },
+    {
+      id:'international',
+      icon:'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+      color:'#7c3aed', bg:'#ede9fe',
+      catBn:'আন্তর্জাতিক কোর্স', catEn:'International Course',
+      courses:[
+        ['Security Patrolling & Monitoring Course (SP&M)','2 Weeks'],
+      ]
+    },
+    {
+      id:'specialized',
+      icon:'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
+      color:'#c2410c', bg:'#ffedd5',
+      catBn:'স্পেশালাইজড কোর্স', catEn:'Specialized Courses',
+      courses:[]
+    },
+    {
+      id:'orientation',
+      icon:'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+      color:'#be185d', bg:'#fce7f3',
+      catBn:'ওরিয়েন্টেশন কোর্স', catEn:'Orientation Courses',
+      courses:[]
+    },
+  ];
+
+  const ONGOING = [
+    {name:'ASP Probationer (27th BCS Batch)',      duration:'1 Year',    start:'01/02/2026', end:'31/01/2027', rank:'Assistant Superintendent of Police', participants:66},
+    {name:'ASP Probationer (44th BCS Batch)',      duration:'1 Year',    start:'01/03/2026', end:'28/02/2027', rank:'Assistant Superintendent of Police', participants:48},
+    {name:'Cadet Sub Inspector (42nd Batch)',      duration:'1 Year',    start:'08/07/2025', end:'07/07/2026', rank:'Sub Inspector',                      participants:505},
+    {name:'Cadet Sub Inspector 43rd Batch-2006',  duration:'06 Months', start:'21/04/2026', end:'20/10/2026', rank:'Sub Inspector',                      participants:168},
+    {name:'27th Sergeant Batch-2006',             duration:'06 Months', start:'30/04/2026', end:'29/10/2026', rank:'Sergeant',                           participants:84},
+    {name:'148th Section Leader Course 2026',     duration:'4 Months',  start:'31/03/2026', end:'30/07/2026', rank:'ASI (AB)',                           participants:106},
+    {name:'Crisis Response Team (CRT) Course',    duration:'20 Days',   start:'17/05/2026', end:'20/06/2026', rank:'SI to Downwards',                    participants:20},
+  ];
+
+  /* ── Offered: category home view ── */
+  const offeredHomeHTML = `
+<p style="color:var(--text2);font-size:.8rem;margin-bottom:14px;text-align:center">
+  ${lang==='bn'?'একটি কোর্স বিভাগ বেছে নিন':'Select a course category'}
+</p>
+${OFFERED_GROUPS.map(g=>`
+<div onclick="window._trainCat='${g.id}';openDetail('training')"
+  style="display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--border);
+  border-left:4px solid ${g.color};border-radius:12px;padding:14px;margin-bottom:10px;
+  cursor:pointer;box-shadow:var(--shadow);transition:all .18s;-webkit-tap-highlight-color:transparent"
+  ontouchstart="this.style.transform='scale(.98)'" ontouchend="this.style.transform=''">
+  <div style="width:48px;height:48px;border-radius:12px;background:${g.bg};
+    display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <svg style="width:24px;height:24px;color:${g.color}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="${g.icon}"/>
+    </svg>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-weight:700;font-size:.92rem;color:var(--primary);margin-bottom:3px">
+      ${lang==='bn'?g.catBn:g.catEn}
+    </div>
+    <div style="font-size:.72rem;color:var(--text3)">
+      ${g.courses.length===0
+        ? (lang==='bn'?'কোনো কোর্স নেই':'No Course Found')
+        : (lang==='bn'?g.courses.length+'টি কোর্স':g.courses.length+' Course'+(g.courses.length>1?'s':''))}
+    </div>
+  </div>
+  <svg style="width:18px;height:18px;color:var(--text3);flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+  </svg>
+</div>`).join('')}`;
+
+  /* ── Offered: category detail view ── */
+  const buildCatDetail = (g) => `
+<button onclick="window._trainCat=null;openDetail('training')"
+  style="display:inline-flex;align-items:center;gap:6px;background:var(--surface2);
+  border:1.5px solid var(--border);color:var(--primary);padding:7px 13px;
+  border-radius:9px;cursor:pointer;font-size:.78rem;font-weight:600;
+  margin-bottom:14px;font-family:inherit">
+  <svg style="width:13px;height:13px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+  </svg>
+  ${lang==='bn'?'কোর্স বিভাগে ফিরুন':'Back to Categories'}
+</button>
+
+<div style="background:${g.bg};border:1.5px solid ${g.color}22;border-radius:12px;
+  padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+  <div style="width:44px;height:44px;border-radius:10px;background:#fff;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    box-shadow:0 1px 6px rgba(0,0,0,.08)">
+    <svg style="width:22px;height:22px;color:${g.color}" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="${g.icon}"/>
+    </svg>
+  </div>
+  <div>
+    <div style="font-size:.58rem;color:${g.color};font-weight:700;text-transform:uppercase;letter-spacing:.15em;margin-bottom:2px">
+      ${lang==='bn'?'অফারড কোর্স':'Offered Courses'}
+    </div>
+    <div style="font-size:1rem;font-weight:700;color:var(--primary)">${lang==='bn'?g.catBn:g.catEn}</div>
+  </div>
+</div>
+
+<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+  <div style="background:var(--primary);padding:10px 14px;display:grid;grid-template-columns:36px 1fr 70px;gap:6px">
+    <div style="color:rgba(255,255,255,.7);font-size:.68rem;font-weight:700;text-align:center">SL.</div>
+    <div style="color:rgba(255,255,255,.7);font-size:.68rem;font-weight:700">${lang==='bn'?'কোর্সের নাম':'Course Name'}</div>
+    <div style="color:rgba(255,255,255,.7);font-size:.68rem;font-weight:700;text-align:center">${lang==='bn'?'মেয়াদ':'Duration'}</div>
+  </div>
+  ${g.courses.length===0
+    ? `<div style="padding:24px;text-align:center;color:#dc2626;font-size:.82rem">
+        <svg style="width:28px;height:28px;margin:0 auto 8px;display:block;opacity:.4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        ${lang==='bn'?'কোনো কোর্স পাওয়া যায়নি':'No Course Found'}
+       </div>`
+    : g.courses.map(([name,dur],i)=>`
+      <div style="display:grid;grid-template-columns:36px 1fr 70px;gap:6px;padding:12px 14px;
+        border-top:1px solid var(--border);background:${i%2===0?'var(--surface)':'var(--surface2)'};
+        align-items:start">
+        <div style="color:var(--primary);font-weight:700;font-size:.82rem;text-align:center;padding-top:1px">${i+1}</div>
+        <div style="color:var(--text);font-size:.82rem;line-height:1.5">${name}</div>
+        <div style="background:${g.bg};color:${g.color};font-size:.68rem;font-weight:700;
+          padding:3px 6px;border-radius:6px;text-align:center;line-height:1.4;word-break:break-word">${dur}</div>
+      </div>`).join('')}
+</div>`;
+
+  /* ── Ongoing ── */
+  const rankColor = r => {
+    if(/assistant superintendent|asp/i.test(r)) return {c:'#1d4ed8',bg:'#dbeafe'};
+    if(/sub inspector|si/i.test(r))             return {c:'#15803d',bg:'#dcfce7'};
+    if(/sergeant/i.test(r))                     return {c:'#7c3aed',bg:'#ede9fe'};
+    if(/asi/i.test(r))                          return {c:'#c2410c',bg:'#ffedd5'};
+    return {c:'#0369a1',bg:'#e0f2fe'};
+  };
+  function buildOngoingRows(){
+    return ONGOING.map(function(o,i){
+      var rc=rankColor(o.rank);
+      var bg=i%2===0?'var(--surface)':'var(--surface2)';
+      return '<div style="border-top:1px solid var(--border)">'+
+        '<div style="display:grid;grid-template-columns:28px 1fr 60px;gap:6px;padding:11px 12px;background:'+bg+';align-items:start">'+
+          '<div style="color:var(--primary);font-weight:700;font-size:.8rem;text-align:center;padding-top:2px">'+(i+1)+'</div>'+
+          '<div>'+
+            '<div style="color:var(--text);font-size:.82rem;font-weight:600;line-height:1.4;margin-bottom:5px">'+o.name+'</div>'+
+            '<div style="font-size:.62rem;color:var(--text3);margin-bottom:5px">'+o.start+' \u2192 '+o.end+'</div>'+
+            '<div style="display:flex;gap:5px;flex-wrap:wrap">'+
+              '<span style="background:'+rc.bg+';color:'+rc.c+';font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px">'+o.rank+'</span>'+
+              '<span style="background:rgba(26,58,107,.06);color:var(--primary);font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px">'+o.participants+' \u099C\u09A8</span>'+
+            '</div>'+
+          '</div>'+
+          '<div style="background:#fef3c7;color:#92400e;font-size:.68rem;font-weight:700;padding:3px 5px;border-radius:6px;text-align:center;line-height:1.4;word-break:break-word">'+o.duration+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+  var _totP=ONGOING.reduce(function(s,o){return s+o.participants;},0);
+  const ongoingHTML=
+    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:8px">'+
+      '<div style="background:var(--primary);padding:10px 12px;display:grid;grid-template-columns:28px 1fr 60px;gap:6px">'+
+        '<div style="color:rgba(255,255,255,.7);font-size:.65rem;font-weight:700;text-align:center">SL.</div>'+
+        '<div style="color:rgba(255,255,255,.7);font-size:.65rem;font-weight:700">Course Name</div>'+
+        '<div style="color:rgba(255,255,255,.7);font-size:.65rem;font-weight:700;text-align:center">Duration</div>'+
+      '</div>'+
+      buildOngoingRows()+
+    '</div>'+
+    '<div style="text-align:center;padding:4px 0;color:var(--text3);font-size:.68rem">'+
+      '\u09AE\u09CB\u099F \u099A\u09B2\u09AE\u09BE\u09A8 \u0995\u09CB\u09B0\u09CD\u09B8: <b style="color:var(--primary)">'+ONGOING.length+'</b> &nbsp;|\u00A0 \u09AE\u09CB\u099F \u0985\u0982\u09B6\u0997\u09CD\u09B0\u09B9\u09A3\u0995\u09BE\u09B0\u09C0: <b style="color:var(--primary)">'+_totP+'</b>'+
+    '</div>';
+
+  /* ── Decide what to show in offered tab ── */
+  let offeredContent;
+  if(cat){
+    const g = OFFERED_GROUPS.find(g=>g.id===cat);
+    offeredContent = g ? buildCatDetail(g) : offeredHomeHTML;
+  } else {
+    offeredContent = offeredHomeHTML;
+  }
+
+  const cards = tab==='offered' ? offeredContent : ongoingHTML;
+
+  return `
 <div class="detail-header rv">
   <div class="detail-eyebrow">${lang==='bn'?'পেশাদার উন্নয়ন':'Professional Development'}</div>
   <div class="detail-title">${lang==='bn'?'প্রশিক্ষণ কোর্সসমূহ':'Training Courses'}</div>
 </div>
-${[
-  [lang==='bn'?'মৌলিক প্রশিক্ষণ কোর্স':'Basic Training Course','01',lang==='bn'?'রিক্রুট কনস্টেবলদের জন্য আইন, ড্রিল, শারীরিক সুস্থতা ও কমিউনিটি পুলিশিং।':'Law, drill, physical fitness, and community policing for Recruit Constables.',[lang==='bn'?'৬ মাস':'6 Months',lang==='bn'?'আবাসিক':'Residential']],
-  [lang==='bn'?'সাব-ইন্সপেক্টর প্রাথমিক প্রশিক্ষণ':'SI Initial Training','02',lang==='bn'?'ফৌজদারি আইন, তদন্ত কৌশল ও আদালত পদ্ধতি।':'Criminal law, investigation techniques, and court procedures.',[lang==='bn'?'১২ মাস':'12 Months',lang==='bn'?'নিবিড়':'Intensive']],
-  [lang==='bn'?'এএসপি প্রবেশনার কোর্স':'ASP Probationer Course','03',lang==='bn'?'প্রশাসন, ফৌজদারি বিচার, সন্ত্রাস দমন ও নেতৃত্ব উন্নয়ন।':'Administration, criminal justice, counter-terrorism, and leadership.',[lang==='bn'?'১৮ মাস':'18 Months',lang==='bn'?'নির্বাহী':'Executive']],
-  [lang==='bn'?'সাইবার ক্রাইম কোর্স':'Cyber Crime Course','04',lang==='bn'?'ডিজিটাল ফরেনসিক, সাইবার অপরাধ তদন্ত ও ডিজিটাল সাক্ষ্য সংগ্রহ।':'Digital forensics, cybercrime investigation, and evidence collection.',[lang==='bn'?'৩ মাস':'3 Months',lang==='bn'?'ইন-সার্ভিস':'In-Service']],
-  [lang==='bn'?'মানবাধিকার ও নৈতিকতা':'Human Rights & Ethics','05',lang==='bn'?'আন্তর্জাতিক মানবাধিকার আইন, পুলিশ নৈতিকতা ও নির্যাতন প্রতিরোধ।':'International human rights law, police ethics, and torture prevention.',[lang==='bn'?'১ মাস':'1 Month',lang==='bn'?'সকল পদ':'All Ranks']],
-  [lang==='bn'?'জাতিসংঘ শান্তিরক্ষা':'UN Peacekeeping','06',lang==='bn'?'জাতিসংঘ মিশনে অফিসারদের বিশেষ প্রস্তুতি।':'Special preparation for UN peacekeeping missions.',[lang==='bn'?'৬ সপ্তাহ':'6 Weeks',lang==='bn'?'আন্তর্জাতিক':'International']],
-].map(([title,num,desc,tags])=>`
-<div class="card rv" style="position:relative">
-  <div style="position:absolute;top:10px;right:12px;font-size:1.8rem;font-weight:700;color:rgba(26,58,107,.05);line-height:1">${num}</div>
-  <div class="card-title">${title}</div>
-  <p class="card-text" style="margin-bottom:8px">${desc}</p>
-  <div>${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-</div>`).join('')}`,
+
+<!-- Tab buttons -->
+<div style="display:flex;gap:10px;margin-bottom:14px" class="rv">
+  <button onclick="window._trainTab='offered';window._trainCat=null;openDetail('training')"
+    style="flex:1;padding:11px 0;border-radius:12px;border:2px solid ${tab==='offered'?'var(--primary)':'var(--border)'};
+    background:${tab==='offered'?'var(--primary)':'var(--surface)'};
+    color:${tab==='offered'?'#fff':'var(--text)'};
+    font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;justify-content:center;gap:8px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+    </svg>
+    ${lang==='bn'?'অফারড কোর্স':'Offered Course'}
+  </button>
+  <button onclick="window._trainTab='ongoing';window._trainCat=null;openDetail('training')"
+    style="flex:1;padding:11px 0;border-radius:12px;border:2px solid ${tab==='ongoing'?'var(--accent)':'var(--border)'};
+    background:${tab==='ongoing'?'var(--accent)':'var(--surface)'};
+    color:${tab==='ongoing'?'#1a3a6b':'var(--text)'};
+    font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;justify-content:center;gap:8px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px">
+      <circle cx="12" cy="12" r="10"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/>
+    </svg>
+    ${lang==='bn'?'চলমান কোর্স':'Ongoing Course'}
+  </button>
+</div>
+
+${cards}`;
+},
 
 trainees:()=>`
 <div class="detail-header rv">
@@ -1034,7 +1274,7 @@ contact:()=>`
 ${[
   ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z',lang==='bn'?'ঠিকানা':'Address',lang==='bn'?'বাংলাদেশ পুলিশ একাডেমি, সারদা, রাজশাহী-৬২০৭':'Bangladesh Police Academy, Sarda, Rajshahi-6207'],
   ['M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',lang==='bn'?'ফোন':'Phone','+880-721-750101 | +880-721-750102'],
-  ['M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',lang==='bn'?'ইমেইল ও ওয়েব':'Email & Web','principal@bpa.gov.bd'],
+  ['M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',lang==='bn'?'ইমেইল ও ওয়েব':'Email & Web','bpa.principal@police.gov.bd'],
 ].map(([path,label,val])=>`
 <div class="c-card rv" style="display:flex;gap:14px;align-items:flex-start;text-align:left">
   <div class="c-icon" style="margin:0;flex-shrink:0"><svg style="width:20px;height:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="${path}"/></svg></div>
