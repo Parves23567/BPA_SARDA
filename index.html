@@ -1677,11 +1677,19 @@ function loadFromGSheet(callback){
     if(!raw) return {name:'',designation:'Constable'};
     raw = raw.replace(/^"|"$/g,'').trim();
 
+    // ── SB/UB আগেই ধরো — যেকোনো জায়গায় থাকুক ──
+    const hasSB = /\(স[ঃ:]\)|\(সঃ\)|[\s\/]সঃ[\s\/]|-সব-|\bSB\b/u.test(raw);
+    const hasUB = /\(নি[ঃ:]\)|\(নিঃ\)|[\s\/]নিঃ[\s\/]|\bUB\b/u.test(raw);
+
     // ── অপ্রয়োজনীয় prefix সরাও ──
-    // যেমন: "(নিঃ) /", "(মতঃ) /", "(নি:)/", "জনাব" ইত্যাদি
+    raw = raw.replace(/^[^\u0980-\u09FF]*[\u0980-\u09FF]/u, m=>m); // keep first Bengali char
     raw = raw.replace(/^\([^)]{1,10}\)\s*[\/\\]\s*/u, '');
     raw = raw.replace(/^জনাব\s+/u, '');
     raw = raw.replace(/^মিসেস\s+/u, '');
+    raw = raw.replace(/^নারী\s+/u, '');
+    // designation prefix এ (স:)/(নি:)/serial থাকলে সেটাও সরাও
+    // যেমন: এসআই(সঃ)/১০ → এসআই, এসআই(নি:)/০৫ → এসআই
+    raw = raw.replace(/^([ঀ-৿]+)\([^)]{1,5}\)[\/\\]?[০-৯\d]*\s*/u, '$1 ');
     raw = raw.trim();
 
     // পদবীর তালিকা
@@ -1713,7 +1721,32 @@ function loadFromGSheet(callback){
       'মহাপরিদর্শক':'IGP','igp':'IGP',
     };
 
-    function mapDesig(d){ return DESIG_MAP[d.toLowerCase()]||DESIG_MAP[d]||d; }
+    function mapDesig(d){
+      const dl = d.toLowerCase();
+      // (স:) বা (সঃ) = Special Branch
+      const isSB = /\(স[ঃ:]\)|\(সঃ\)/u.test(d);
+      // (নি:) বা (নিঃ) = Unarmed Branch
+      const isUB = /\(নি[ঃ:]\)|\(নিঃ\)/u.test(d);
+
+      let base = DESIG_MAP[dl] || DESIG_MAP[d] || d;
+
+      // UB/SB suffix correct করো
+      if(isSB){
+        base = base.replace('-UB','').replace('-SB','');
+        if(base==='Sub-Inspector') return 'Sub-Inspector-SB';
+        if(base==='ASI') return 'ASI-SB';
+        if(base==='Inspector') return 'Inspector-SB';
+        return base+'-SB';
+      }
+      if(isUB){
+        base = base.replace('-UB','').replace('-SB','');
+        if(base==='Sub-Inspector') return 'Sub-Inspector-UB';
+        if(base==='ASI') return 'ASI-UB';
+        if(base==='Inspector') return 'Inspector-UB';
+        return base+'-UB';
+      }
+      return base;
+    }
 
     // পদবী শেষে আছে কিনা চেক (কমা দিয়ে আলাদা)
     const commaIdx = raw.lastIndexOf(',');
@@ -1721,7 +1754,11 @@ function loadFromGSheet(callback){
       const afterComma = raw.slice(commaIdx+1).trim();
       const isDesig = DESIGS.some(d=>afterComma.toLowerCase().includes(d.toLowerCase()));
       if(isDesig){
-        return {name: raw.slice(0,commaIdx).trim(), designation: mapDesig(afterComma)};
+        let desig = mapDesig(afterComma);
+        // raw-এ (স:)/(নি:) থাকলে override করো
+        if(hasSB) desig=desig.replace('-UB','-SB');
+        if(hasUB) desig=desig.replace('-SB','-UB');
+        return {name: raw.slice(0,commaIdx).trim(), designation: desig};
       }
     }
 
@@ -1729,16 +1766,24 @@ function loadFromGSheet(callback){
     for(const d of DESIGS){
       if(raw.toLowerCase().startsWith(d.toLowerCase())){
         const nm = raw.slice(d.length).trim().replace(/^[,\/\-\s]+/,'').trim();
-        return {name: nm||raw, designation: mapDesig(d)};
+        let desig = mapDesig(d);
+        if(hasSB) desig=desig.replace('-UB','-SB');
+        if(hasUB) desig=desig.replace('-SB','-UB');
+        return {name: nm||raw, designation: desig};
       }
     }
 
-    // পদবী মাঝে আছে (যেমন: "মো. রহিম কনস্টেবল")
+    // পদবী মাঝে আছে
     for(const d of DESIGS){
       const idx = raw.toLowerCase().lastIndexOf(d.toLowerCase());
       if(idx>0){
         const nm = raw.slice(0,idx).trim().replace(/[,\/\-\s]+$/,'').trim();
-        if(nm) return {name:nm, designation: mapDesig(d)};
+        if(nm){
+          let desig = mapDesig(d);
+          if(hasSB) desig=desig.replace('-UB','-SB');
+          if(hasUB) desig=desig.replace('-SB','-UB');
+          return {name:nm, designation: desig};
+        }
       }
     }
 
@@ -1805,7 +1850,7 @@ function loadFromGSheet(callback){
       callback(data);
     })
     .catch((err)=>{
-      console.warn('CSV fetch failed:',err.message,'→ trying gviz');
+      console.log('CSV: switching to gviz fallback');
       // fallback: gviz json via script tag
       const cbName='_gsCB_'+Date.now();
       const script=document.createElement('script');
@@ -1901,7 +1946,7 @@ function filterDir(){
   const pool = currentCat ? catOfficers : allOfficers;
   renderCards(pool.filter(o=>{
     const matchQ=!q||(o.name+o.phone+o.designation+(o.department||'')).toLowerCase().includes(q);
-    const matchR=!r||o.designation===r||o.designation.includes(r.replace('-UB','').replace('-SB',''));
+    const matchR=!r||o.designation===r;
     const matchD=!dept||(o.department||'').trim()===dept;
     return matchQ&&matchR&&matchD;
   }));
